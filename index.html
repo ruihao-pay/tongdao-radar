@@ -11,17 +11,23 @@
   .gate-cond { background: #fef3c7; color: #92400e; }
   .gate-fail { background: #fee2e2; color: #991b1b; }
   .gate-pending { background: #dbeafe; color: #1e40af; }
-  .card { transition: all 0.2s; min-height: 280px; display: flex; flex-direction: column; }
+  .card { transition: all 0.2s; min-height: 290px; display: flex; flex-direction: column; }
   .card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
   .priority-card { background: linear-gradient(135deg, #faf5ff 0%, #fdf2f8 100%); border: 2px solid #c084fc !important; position: relative; }
-  .priority-card::before { content: '🏆 闲闲关键候选'; position: absolute; top: -12px; left: 14px; background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 9999px; letter-spacing: 0.3px; box-shadow: 0 2px 8px rgba(139,92,246,0.4); }
+  .priority-card::before { content: '🏆 强推'; position: absolute; top: -12px; left: 14px; background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 9999px; letter-spacing: 0.3px; box-shadow: 0 2px 8px rgba(139,92,246,0.4); }
   .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 500; white-space: nowrap; }
   .diff-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5em; }
   .compare-checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: #8b5cf6; }
-  .compare-checkbox:checked + label { color: #8b5cf6; font-weight: 600; }
   .compare-fab { position: fixed; bottom: 24px; right: 24px; background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; padding: 12px 24px; border-radius: 9999px; box-shadow: 0 8px 24px rgba(139,92,246,0.4); cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; z-index: 30; transition: transform 0.2s; }
   .compare-fab:hover { transform: scale(1.05); }
   .selected-card { box-shadow: 0 0 0 3px #c084fc !important; }
+  /* KPI 卡 */
+  .kpi { cursor: pointer; transition: all 0.2s; }
+  .kpi:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+  .kpi-active { ring: 2px; box-shadow: 0 0 0 3px rgba(99,102,241,0.5); }
+  /* 业务切换器 */
+  .biz-pill { padding: 6px 14px; border-radius: 9999px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid #e5e7eb; background: white; }
+  .biz-pill.active { background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
   @media (max-width: 640px) { .hide-mobile { display: none; } }
 </style>
 </head>
@@ -47,19 +53,30 @@
   <div class="max-w-7xl mx-auto px-4">
     <div class="flex gap-1 overflow-x-auto">
       <button data-tab="overview" class="tab-btn active px-4 py-3 text-sm font-medium border-b-2 border-indigo-600 text-indigo-600 whitespace-nowrap">📊 总览</button>
-      <button data-tab="xianxian" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-indigo-600 whitespace-nowrap">🎯 闲闲专题</button>
-      <button data-tab="matrix" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-indigo-600 whitespace-nowrap">🗂️ 类型矩阵</button>
+      <button data-tab="business" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-indigo-600 whitespace-nowrap">🎯 业务专题</button>
+      <button data-tab="matrix" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-indigo-600 whitespace-nowrap">🗂️ 角色 × Gate</button>
       <button data-tab="stats" class="tab-btn px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-indigo-600 whitespace-nowrap">📈 统计</button>
     </div>
   </div>
 </div>
 
+<!-- Dashboard (KPI + mini-charts) -->
+<div id="dashboard" class="bg-gradient-to-b from-indigo-50/50 to-transparent border-b">
+  <div class="max-w-7xl mx-auto px-4 py-5">
+    <div class="grid grid-cols-3 md:grid-cols-6 gap-3 mb-4" id="kpi-cards"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="mini-charts"></div>
+  </div>
+</div>
+
 <!-- Filters -->
 <div id="filters" class="bg-white border-b shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-6 gap-2">
+  <div class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 md:grid-cols-7 gap-2">
     <input type="text" id="search" placeholder="🔍 搜索通道名/HQ/市场/差异化..." class="col-span-2 md:col-span-2 px-3 py-2 border rounded-md text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none">
-    <select id="filter-type" class="px-3 py-2 border rounded-md text-sm bg-white">
-      <option value="">所有类型</option>
+    <select id="filter-region" class="px-3 py-2 border rounded-md text-sm bg-white">
+      <option value="">所有地区</option>
+    </select>
+    <select id="filter-role" class="px-3 py-2 border rounded-md text-sm bg-white">
+      <option value="">所有角色</option>
     </select>
     <select id="filter-gate" class="px-3 py-2 border rounded-md text-sm bg-white">
       <option value="">所有 Gate</option>
@@ -117,19 +134,22 @@
 <script>
 const data = window.CHANNELS_DATA || [];
 const META = window.META || {};
+const BUSINESSES = window.BUSINESSES || [];
+const BIZ_LABELS = window.BIZ_LABELS || {biz1:"业务一", biz2:"业务二"};
 let currentTab = 'overview';
 let currentView = 'cards';
+let currentBiz = (BUSINESSES[0] && BUSINESSES[0].id) || 'xianxian';
 let filtered = [...data];
 let selected = [];
 
 // 维度配置
 const DIMS = [
-  {key:'sub',  label:'订阅', short:'订'},
-  {key:'rate', label:'费率', short:'费'},
-  {key:'market', label:'市场', short:'市'},
-  {key:'cb',   label:'拒付', short:'拒'},
-  {key:'multi',label:'多商户', short:'多'},
-  {key:'settle',label:'账期', short:'期'}
+  {key:'sub',   label:'订阅',   short:'订'},
+  {key:'rate',  label:'费率',   short:'费'},
+  {key:'market',label:'市场',   short:'市'},
+  {key:'cb',    label:'拒付',   short:'拒'},
+  {key:'multi', label:'多商户', short:'多'},
+  {key:'settle',label:'账期',   short:'期'}
 ];
 
 // ============ 初始化 ============
@@ -139,14 +159,18 @@ function init() {
   buildFilters();
   bindEvents();
   readURLParams();
+  renderDashboard();
   applyFilters();
 }
 
 function buildFilters() {
-  fillSelect('filter-type', [...new Set(data.map(d=>d.type))].sort());
-  fillSelect('filter-gate', [...new Set(data.map(d=>d.gate))].sort());
-  fillSelect('filter-rec',  [...new Set(data.map(d=>d.rec))].sort());
+  fillSelect('filter-region', uniqueSorted(data.map(d=>d.region)));
+  fillSelect('filter-role',   uniqueSorted(data.map(d=>d.role)));
+  fillSelect('filter-gate',   uniqueSorted(data.map(d=>d.gate)));
+  fillSelect('filter-rec',    uniqueSorted(data.map(d=>d.rec)));
 }
+
+function uniqueSorted(arr) { return [...new Set(arr.filter(Boolean))].sort(); }
 
 function fillSelect(id, items) {
   const el = document.getElementById(id);
@@ -158,13 +182,13 @@ function fillSelect(id, items) {
 }
 
 function bindEvents() {
-  ['search','filter-type','filter-gate','filter-rec','filter-ai'].forEach(id => {
+  ['search','filter-region','filter-role','filter-gate','filter-rec','filter-ai'].forEach(id => {
     document.getElementById(id).addEventListener('input', onFilterChange);
     document.getElementById(id).addEventListener('change', onFilterChange);
   });
   document.getElementById('reset-filter').addEventListener('click', () => {
     document.getElementById('search').value = '';
-    ['filter-type','filter-gate','filter-rec','filter-ai'].forEach(id => document.getElementById(id).value = '');
+    ['filter-region','filter-role','filter-gate','filter-rec','filter-ai'].forEach(id => document.getElementById(id).value = '');
     onFilterChange();
   });
   document.getElementById('share-link').addEventListener('click', shareLink);
@@ -195,7 +219,8 @@ function readURLParams() {
     });
   }
   if (p.get('view')) currentView = p.get('view');
-  ['search','filter-type','filter-gate','filter-rec','filter-ai'].forEach(id => {
+  if (p.get('biz')) currentBiz = p.get('biz');
+  ['search','filter-region','filter-role','filter-gate','filter-rec','filter-ai'].forEach(id => {
     const v = p.get(id);
     if (v) document.getElementById(id).value = v;
   });
@@ -205,7 +230,8 @@ function updateURL() {
   const params = new URLSearchParams();
   if (currentTab !== 'overview') params.set('tab', currentTab);
   if (currentView !== 'cards') params.set('view', currentView);
-  ['search','filter-type','filter-gate','filter-rec','filter-ai'].forEach(id => {
+  if (currentTab === 'business' && currentBiz !== (BUSINESSES[0]&&BUSINESSES[0].id)) params.set('biz', currentBiz);
+  ['search','filter-region','filter-role','filter-gate','filter-rec','filter-ai'].forEach(id => {
     const v = document.getElementById(id).value;
     if (v) params.set(id, v);
   });
@@ -242,26 +268,114 @@ function setView(v) {
   updateURL();
 }
 
+// ============ Dashboard (KPI + mini-charts) ============
+function renderDashboard() {
+  const total = data.length;
+  const aiOk = data.filter(d => d.ai === '✅可接').length;
+  const strong = data.filter(d => (d.rec||'').includes('🏆')).length;
+  const locked = data.filter(d => (d.rec||'').includes('🟢')).length;
+  const hkOk = data.filter(d => d.hk === '✅').length;
+  const noGo = data.filter(d => (d.rec||'').includes('❌')).length;
+
+  const cards = [
+    {label:'通道总数',  value:total,  color:'text-indigo-700 bg-white',         filter:null},
+    {label:'接 AI 陪聊', value:aiOk,   color:'text-green-700 bg-green-50',       filter:{id:'filter-ai',value:'✅可接'}},
+    {label:'🏆 强推',    value:strong, color:'text-purple-700 bg-purple-50',     filter:{id:'filter-rec',value:'🏆 强推'}},
+    {label:'🟢 已锁',    value:locked, color:'text-emerald-700 bg-emerald-50',   filter:{id:'filter-rec',value:'🟢 已锁接入'}},
+    {label:'HK ✅ 直签', value:hkOk,   color:'text-blue-700 bg-blue-50',         filter:null,onclick:'hkFilter'},
+    {label:'❌ 不接入',  value:noGo,   color:'text-red-700 bg-red-50',           filter:{id:'filter-rec',value:'❌ 不接入'}}
+  ];
+
+  document.getElementById('kpi-cards').innerHTML = cards.map((k, i) => `
+    <div class="kpi ${k.color} rounded-lg p-3 border shadow-sm" data-kpi="${i}" onclick="onKpiClick(${i})">
+      <div class="text-[11px] text-gray-500 mb-1">${k.label}</div>
+      <div class="text-2xl font-bold font-mono">${k.value}</div>
+    </div>
+  `).join('');
+
+  // 缓存 KPI 配置供点击使用
+  window._KPI = cards;
+
+  // 迷你图:Gate 分布 + 建议分布
+  const gateMap = {}, recMap = {};
+  data.forEach(d => {
+    gateMap[d.gate] = (gateMap[d.gate]||0) + 1;
+    recMap[d.rec]  = (recMap[d.rec]||0) + 1;
+  });
+
+  document.getElementById('mini-charts').innerHTML = `
+    <div class="bg-white rounded-lg border shadow-sm p-4">
+      <div class="text-xs font-semibold text-gray-700 mb-2">Gate 状态分布</div>
+      ${miniBars(gateMap, total, gateBarColor, 'filter-gate')}
+    </div>
+    <div class="bg-white rounded-lg border shadow-sm p-4">
+      <div class="text-xs font-semibold text-gray-700 mb-2">建议分布</div>
+      ${miniBars(recMap, total, recBarColor, 'filter-rec')}
+    </div>
+  `;
+}
+
+function miniBars(map, total, colorFn, filterId) {
+  return Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([k,v]) => `
+    <div class="mb-1.5 cursor-pointer hover:bg-gray-50 rounded px-1 -mx-1" onclick="setFilter('${filterId}', '${k.replace(/'/g, "\\'")}')">
+      <div class="flex justify-between text-[11px] mb-0.5">
+        <span class="text-gray-700">${k}</span>
+        <span class="font-mono text-gray-500">${v}</span>
+      </div>
+      <div class="h-1.5 bg-gray-100 rounded">
+        <div class="h-1.5 ${colorFn(k)} rounded" style="width:${v/total*100}%"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function gateBarColor(k) { return k.startsWith('✅')?'bg-emerald-500':k.startsWith('⚠️')?'bg-yellow-500':k.startsWith('❌')?'bg-red-500':'bg-blue-500'; }
+function recBarColor(k)  { return k.includes('🏆')?'bg-purple-500':k.includes('🟢')?'bg-green-500':k.includes('P2')?'bg-blue-500':k.includes('观察')?'bg-indigo-400':k.includes('备选')?'bg-gray-400':k.includes('❌')?'bg-red-400':'bg-yellow-400'; }
+
+function onKpiClick(i) {
+  const k = window._KPI[i];
+  if (k.onclick === 'hkFilter') {
+    // HK ✅ 不在 filter 下拉里,用搜索
+    document.getElementById('search').value = '';
+    // 选不到 HK,改成在所有 filter 里搜 hk='✅' — 简化为提示用户
+    alert('HK ✅ 直签筛选请用建议或地区组合');
+    return;
+  }
+  if (k.filter) {
+    setFilter(k.filter.id, k.filter.value);
+  } else {
+    // 总数:重置全部
+    document.getElementById('search').value = '';
+    ['filter-region','filter-role','filter-gate','filter-rec','filter-ai'].forEach(id => document.getElementById(id).value = '');
+    onFilterChange();
+  }
+}
+
+function setFilter(id, value) {
+  document.getElementById(id).value = value;
+  if (currentTab !== 'overview') setTab('overview');
+  onFilterChange();
+  window.scrollTo({top: document.getElementById('filters').offsetTop - 100, behavior:'smooth'});
+}
+
 // ============ Filter ============
 function applyFilters() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const ft = document.getElementById('filter-type').value;
+  const q  = document.getElementById('search').value.toLowerCase();
+  const fr = document.getElementById('filter-region').value;
+  const fo = document.getElementById('filter-role').value;
   const fg = document.getElementById('filter-gate').value;
-  const fr = document.getElementById('filter-rec').value;
+  const fc = document.getElementById('filter-rec').value;
   const fa = document.getElementById('filter-ai').value;
 
   filtered = data.filter(d => {
-    if (q && !(`${d.name} ${d.hq||''} ${d.max_market||''} ${d.coverage||''} ${d.diff||''} ${d.type||''}`).toLowerCase().includes(q)) return false;
-    if (ft && d.type !== ft) return false;
+    if (q && !(`${d.name} ${d.hq||''} ${d.max_market||''} ${d.coverage||''} ${d.diff||''} ${d.region||''} ${d.role||''}`).toLowerCase().includes(q)) return false;
+    if (fr && d.region !== fr) return false;
+    if (fo && d.role !== fo) return false;
     if (fg && d.gate !== fg) return false;
-    if (fr && d.rec !== fr) return false;
+    if (fc && d.rec !== fc) return false;
     if (fa && d.ai !== fa) return false;
     return true;
   });
-
-  if (currentTab === 'xianxian') {
-    filtered = filtered.filter(d => d.ai === '✅可接' || d.ai === '⏳待问');
-  }
 
   document.getElementById('count-info').textContent = `共 ${filtered.length} 条`;
   render();
@@ -272,7 +386,7 @@ function render() {
   const root = document.getElementById('content');
   if (currentTab === 'matrix') return renderMatrix(root);
   if (currentTab === 'stats') return renderStats(root);
-  if (currentTab === 'xianxian') return renderXianxian(root);
+  if (currentTab === 'business') return renderBusiness(root);
   if (currentView === 'table') return renderTable(root);
   return renderCards(root);
 }
@@ -312,9 +426,9 @@ function scoreColor(v) {
 }
 
 function scoreBars(d) {
-  return `<div class="grid grid-cols-6 gap-1 text-[10px] mt-2">${DIMS.map(({key,short}) => {
+  return `<div class="grid grid-cols-6 gap-1 text-[10px] mt-2">${DIMS.map(({key,short,label}) => {
     const v = d[key] || 0;
-    return `<div class="text-center" title="${DIMS.find(x=>x.key===key).label}: ${v}">
+    return `<div class="text-center" title="${label}: ${v}">
       <div class="text-gray-400 mb-0.5">${short}</div>
       <div class="h-1.5 bg-gray-100 rounded">
         <div class="h-1.5 ${scoreColor(v)} rounded transition-all" style="width: ${v*10}%"></div>
@@ -346,7 +460,7 @@ function updateCompareFAB() {
     document.body.appendChild(btn);
   }
   if (selected.length >= 2) {
-    btn.innerHTML = `<span>📊 对比 ${selected.length} 条</span><span class="text-xs opacity-80">·清空</span>`;
+    btn.innerHTML = `<span>📊 对比 ${selected.length} 条</span>`;
     btn.style.display = '';
   } else {
     btn.style.display = 'none';
@@ -359,52 +473,54 @@ function clearCompare() {
   render();
 }
 
-function renderCards(root) {
-  if (filtered.length === 0) return root.innerHTML = '<p class="text-center text-gray-400 py-12">没有匹配的通道</p>';
-
-  const sorted = [...filtered].sort((a,b) => {
-    const ra = a.rec.includes('🏆')?100 : a.rec.includes('🟢')?80 : a.rec.includes('P2')?50 : a.rec.includes('观察')?40 : a.rec.includes('备选')?30 : a.rec.includes('搁置')?20 : 10;
-    const rb = b.rec.includes('🏆')?100 : b.rec.includes('🟢')?80 : b.rec.includes('P2')?50 : b.rec.includes('观察')?40 : b.rec.includes('备选')?30 : b.rec.includes('搁置')?20 : 10;
+function sortByRec(list) {
+  return [...list].sort((a,b) => {
+    const score = (r) => r.includes('🏆')?100 : r.includes('🟢')?80 : r.includes('P2')?50 : r.includes('观察')?40 : r.includes('备选')?30 : r.includes('搁置')?20 : 10;
+    const ra = score(a.rec||''), rb = score(b.rec||'');
     if (ra !== rb) return rb - ra;
     return (b.biz1||0) + (b.biz2||0) - (a.biz1||0) - (a.biz2||0);
   });
+}
 
+function renderCards(root) {
+  if (filtered.length === 0) return root.innerHTML = '<p class="text-center text-gray-400 py-12">没有匹配的通道</p>';
+  const sorted = sortByRec(filtered);
   root.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">` +
-    sorted.map(d => {
-      const idx = data.indexOf(d);
-      const isPriority = d.rec.includes('🏆');
-      return `
-      <div class="card ${isPriority?'priority-card':'bg-white border'} ${isSelected(idx)?'selected-card':''} rounded-lg shadow-sm p-4 cursor-pointer relative" onclick='showDetail(${idx})'>
-        <div class="absolute top-3 right-3" onclick='event.stopPropagation()'>
-          <input type="checkbox" class="compare-checkbox" ${isSelected(idx)?'checked':''} onchange='toggleSelect(${idx}, event)' title="选中对比">
-        </div>
-        <div class="flex items-start justify-between gap-2 mb-2 pr-8">
-          <h3 class="font-semibold text-gray-900 text-base leading-tight">${d.name}</h3>
-        </div>
-        <div class="flex items-center gap-2 mb-2">
-          <span class="badge ${aiClass(d.ai)}">${d.ai}</span>
-          <span class="text-xs text-gray-500">${d.type} · ${d.hq||'—'}</span>
-        </div>
-        <div class="flex flex-wrap gap-1 mb-2">
-          <span class="badge ${gateClass(d.gate)}">${d.gate}</span>
-          <span class="badge ${recClass(d.rec)}">${d.rec}</span>
-          <span class="badge bg-gray-100 text-gray-700">HK ${d.hk}</span>
-        </div>
-        <div class="text-xs text-gray-600 diff-text mb-2 flex-grow">${d.diff||'—'}</div>
-        ${scoreBars(d)}
-        <div class="grid grid-cols-2 gap-2 text-xs mt-3 pt-3 border-t border-gray-100">
-          <div><span class="text-gray-500">业务一</span> <span class="font-mono font-semibold text-gray-900 ml-1">${(d.biz1||0).toFixed(2)}</span></div>
-          <div><span class="text-gray-500">业务二</span> <span class="font-mono font-semibold text-gray-900 ml-1">${(d.biz2||0).toFixed(2)}</span></div>
-        </div>
+    sorted.map(d => cardHTML(d, data.indexOf(d))).join('') + `</div>`;
+}
+
+function cardHTML(d, idx) {
+  const isPriority = (d.rec||'').includes('🏆');
+  return `
+    <div class="card ${isPriority?'priority-card':'bg-white border'} ${isSelected(idx)?'selected-card':''} rounded-lg shadow-sm p-4 cursor-pointer relative" onclick='showDetail(${idx})'>
+      <div class="absolute top-3 right-3" onclick='event.stopPropagation()'>
+        <input type="checkbox" class="compare-checkbox" ${isSelected(idx)?'checked':''} onchange='toggleSelect(${idx}, event)' title="选中对比">
       </div>
-    `;}).join('') + `</div>`;
+      <div class="flex items-start justify-between gap-2 mb-2 pr-8">
+        <h3 class="font-semibold text-gray-900 text-base leading-tight">${d.name}</h3>
+      </div>
+      <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="badge ${aiClass(d.ai)}">${d.ai}</span>
+        <span class="text-xs text-gray-500">${d.region} · ${d.role}</span>
+      </div>
+      <div class="flex flex-wrap gap-1 mb-2">
+        <span class="badge ${gateClass(d.gate)}">${d.gate}</span>
+        <span class="badge ${recClass(d.rec)}">${d.rec}</span>
+        <span class="badge bg-gray-100 text-gray-700">HK ${d.hk}</span>
+      </div>
+      <div class="text-xs text-gray-600 diff-text mb-2 flex-grow">${d.diff||'—'}</div>
+      ${scoreBars(d)}
+      <div class="grid grid-cols-2 gap-2 text-xs mt-3 pt-3 border-t border-gray-100">
+        <div><span class="text-gray-500">${BIZ_LABELS.biz1}</span> <span class="font-mono font-semibold text-gray-900 ml-1">${(d.biz1||0).toFixed(2)}</span></div>
+        <div><span class="text-gray-500">${BIZ_LABELS.biz2}</span> <span class="font-mono font-semibold text-gray-900 ml-1">${(d.biz2||0).toFixed(2)}</span></div>
+      </div>
+    </div>
+  `;
 }
 
 function renderTable(root) {
   if (filtered.length === 0) return root.innerHTML = '<p class="text-center text-gray-400 py-12">没有匹配的通道</p>';
-
   const sorted = [...filtered].sort((a,b) => (b.biz1||0)-(a.biz1||0));
-
   root.innerHTML = `
     <div class="bg-white rounded-lg shadow-sm border overflow-x-auto">
       <table class="w-full text-sm">
@@ -412,25 +528,27 @@ function renderTable(root) {
           <tr>
             <th class="px-2 py-2 text-center w-10">选</th>
             <th class="px-3 py-2 text-left">通道名</th>
-            <th class="px-3 py-2 text-left">类型</th>
+            <th class="px-3 py-2 text-left">地区</th>
+            <th class="px-3 py-2 text-left">角色</th>
             <th class="px-3 py-2 text-left">Gate</th>
             <th class="px-3 py-2 text-left">建议</th>
             <th class="px-3 py-2 text-center">AI</th>
             <th class="px-3 py-2 text-center hide-mobile">HK</th>
-            <th class="px-3 py-2 text-right">业务一</th>
-            <th class="px-3 py-2 text-right">业务二</th>
+            <th class="px-3 py-2 text-right">${BIZ_LABELS.biz1}</th>
+            <th class="px-3 py-2 text-right">${BIZ_LABELS.biz2}</th>
             <th class="px-3 py-2 text-left hide-mobile">差异化</th>
           </tr>
         </thead>
         <tbody>
           ${sorted.map(d => {
             const idx = data.indexOf(d);
-            const isPriority = d.rec.includes('🏆');
+            const isPriority = (d.rec||'').includes('🏆');
             return `
             <tr class="border-t hover:bg-gray-50 cursor-pointer ${isPriority?'bg-purple-50':''}" onclick='showDetail(${idx})'>
               <td class="px-2 py-2 text-center" onclick='event.stopPropagation()'><input type="checkbox" class="compare-checkbox" ${isSelected(idx)?'checked':''} onchange='toggleSelect(${idx}, event)'></td>
               <td class="px-3 py-2 font-medium text-gray-900">${d.name}</td>
-              <td class="px-3 py-2 text-gray-600 text-xs">${d.type}</td>
+              <td class="px-3 py-2 text-gray-600 text-xs">${d.region}</td>
+              <td class="px-3 py-2 text-gray-600 text-xs">${d.role}</td>
               <td class="px-3 py-2"><span class="badge ${gateClass(d.gate)}">${d.gate}</span></td>
               <td class="px-3 py-2"><span class="badge ${recClass(d.rec)}">${d.rec}</span></td>
               <td class="px-3 py-2 text-center"><span class="badge ${aiClass(d.ai)}">${d.ai}</span></td>
@@ -446,84 +564,94 @@ function renderTable(root) {
   `;
 }
 
-function renderXianxian(root) {
-  const t1 = filtered.filter(d => d.ai === '✅可接' && d.hk === '✅' && d.gate.startsWith('✅'));
-  const t2 = filtered.filter(d => d.ai === '✅可接' && !(d.hk === '✅' && d.gate.startsWith('✅')));
-  const t3 = filtered.filter(d => d.ai === '⏳待问');
+// ============ 业务专题 ============
+function setBiz(id) {
+  currentBiz = id;
+  render();
+  updateURL();
+}
 
-  const card = (d) => {
-    const idx = data.indexOf(d);
-    const isPriority = d.rec.includes('🏆');
-    return `
-    <div class="card ${isPriority?'priority-card':'bg-white border'} ${isSelected(idx)?'selected-card':''} rounded-lg shadow-sm p-4 cursor-pointer relative" onclick='showDetail(${idx})'>
-      <div class="absolute top-3 right-3" onclick='event.stopPropagation()'>
-        <input type="checkbox" class="compare-checkbox" ${isSelected(idx)?'checked':''} onchange='toggleSelect(${idx}, event)'>
-      </div>
-      <div class="flex items-start justify-between gap-2 mb-2 pr-8">
-        <h3 class="font-semibold text-gray-900">${d.name}</h3>
-      </div>
-      <div class="flex items-center gap-2 mb-2">
-        <span class="badge ${recClass(d.rec)}">${d.rec}</span>
-        <span class="text-xs text-gray-500">${d.type}</span>
-      </div>
-      <div class="text-xs text-gray-600 diff-text mb-2 flex-grow">${d.diff||'—'}</div>
-      <div class="flex gap-1 flex-wrap">
-        <span class="badge ${gateClass(d.gate)}">${d.gate}</span>
-        <span class="badge bg-gray-100 text-gray-700">HK ${d.hk}</span>
-      </div>
-      ${scoreBars(d)}
+function renderBusiness(root) {
+  if (BUSINESSES.length === 0) {
+    root.innerHTML = `<div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center text-yellow-800">
+      <p class="font-medium">暂未配置业务</p>
+      <p class="text-xs mt-2">在 data.js 的 BUSINESSES 数组里添加业务配置</p>
+    </div>`;
+    return;
+  }
+  const biz = BUSINESSES.find(b => b.id === currentBiz) || BUSINESSES[0];
+
+  // 按业务的 check 函数计算各通道在 4 道 Gate 上的得分
+  const candidates = filtered.map(d => {
+    const r = biz.check(d);
+    const pass = Object.values(r).filter(v => v===true).length;
+    return {d, r, pass};
+  });
+  const t1 = candidates.filter(c => c.pass === 4).map(c => c.d);          // 全适配
+  const t2 = candidates.filter(c => c.pass === 3).map(c => c.d);          // 3/4
+  const t3 = candidates.filter(c => c.pass === 2).map(c => c.d);          // 2/4
+  const others = candidates.filter(c => c.pass <= 1).length;
+
+  // 业务切换器
+  const switcher = `
+    <div class="flex flex-wrap items-center gap-2 mb-4">
+      <span class="text-xs text-gray-500">业务切换:</span>
+      ${BUSINESSES.map(b => `
+        <button class="biz-pill ${b.id===biz.id?'active':''}" onclick="setBiz('${b.id}')">${b.short || b.name}</button>
+      `).join('')}
+      <span class="text-xs text-gray-400 ml-2">类目: ${biz.category||'—'}</span>
     </div>
-  `;};
+  `;
+
+  // 各 Gate 通过数(配色)
+  const gatePassCount = (gateIdx) => candidates.filter(c => Object.values(c.r)[gateIdx]===true).length;
 
   root.innerHTML = `
     <div class="space-y-6">
+      ${switcher}
+
       <div class="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-5">
-        <h2 class="font-bold text-lg text-purple-900 mb-2">🎯 闲闲（AI 陪聊）适配筛选</h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm mt-3">
-          <div class="bg-white/60 rounded p-3 text-center"><div class="text-xs text-purple-700 mb-1">Gate①</div><div class="font-semibold text-purple-900">接 AI 陪聊</div></div>
-          <div class="bg-white/60 rounded p-3 text-center"><div class="text-xs text-purple-700 mb-1">Gate②</div><div class="font-semibold text-purple-900">HK 直签</div></div>
-          <div class="bg-white/60 rounded p-3 text-center"><div class="text-xs text-purple-700 mb-1">Gate③</div><div class="font-semibold text-purple-900">Gate PASS</div></div>
-          <div class="bg-white/60 rounded p-3 text-center"><div class="text-xs text-purple-700 mb-1">Gate④</div><div class="font-semibold text-purple-900">订阅功能 ≥ 5</div></div>
+        <h2 class="font-bold text-lg text-purple-900 mb-1">🎯 ${biz.name} 适配筛选</h2>
+        <p class="text-xs text-purple-700">${biz.category||'—'}</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mt-4">
+          ${biz.gates.map((g, i) => `
+            <div class="bg-white/60 rounded p-3 text-center">
+              <div class="text-xs text-purple-700 mb-1">Gate ${'①②③④'[i]}</div>
+              <div class="font-semibold text-purple-900 text-sm">${g}</div>
+              <div class="text-xs text-purple-500 mt-1">${gatePassCount(i)} 条通过</div>
+            </div>
+          `).join('')}
         </div>
-        <p class="text-xs text-purple-600 mt-3">候选分布：T1 完全适配 ${t1.length} · T2 部分适配 ${t2.length} · T3 待评估 ${t3.length}</p>
+        <p class="text-xs text-purple-700 mt-3">候选分布: T1 全适配 <b>${t1.length}</b> · T2 三道过 <b>${t2.length}</b> · T3 两道过 <b>${t3.length}</b> · 其他 ${others}</p>
       </div>
 
       <div>
-        <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2">🏆 T1 — 全适配候选（${t1.length}）<span class="text-xs font-normal text-gray-500">立即可接触</span></h3>
-        ${t1.length ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${t1.map(card).join('')}</div>` : '<p class="text-gray-400 text-sm">无</p>'}
+        <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2">🏆 T1 — 4/4 全适配（${t1.length}）<span class="text-xs font-normal text-gray-500">立即可接触</span></h3>
+        ${t1.length ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${t1.map(d => cardHTML(d, data.indexOf(d))).join('')}</div>` : '<p class="text-gray-400 text-sm">无</p>'}
       </div>
 
       <div>
-        <h3 class="font-bold text-yellow-700 mb-3 flex items-center gap-2">⚠️ T2 — 部分适配（${t2.length}）<span class="text-xs font-normal text-gray-500">有限制，需具体确认</span></h3>
-        ${t2.length ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${t2.map(card).join('')}</div>` : '<p class="text-gray-400 text-sm">无</p>'}
+        <h3 class="font-bold text-yellow-700 mb-3 flex items-center gap-2">⚠️ T2 — 3/4 部分适配（${t2.length}）<span class="text-xs font-normal text-gray-500">具体确认 1 道</span></h3>
+        ${t2.length ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${t2.map(d => cardHTML(d, data.indexOf(d))).join('')}</div>` : '<p class="text-gray-400 text-sm">无</p>'}
       </div>
 
       <div>
-        <h3 class="font-bold text-blue-700 mb-3 flex items-center gap-2">⏳ T3 — 待评估（${t3.length}）<span class="text-xs font-normal text-gray-500">需问 AI 陪聊类目接受度</span></h3>
-        ${t3.length ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${t3.map(card).join('')}</div>` : '<p class="text-gray-400 text-sm">无</p>'}
-      </div>
-
-      <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm">
-        <h4 class="font-bold text-amber-900 mb-2">💡 关键提示</h4>
-        <ul class="space-y-1 text-amber-800 text-xs list-disc pl-5">
-          <li>领航主体寿命 6-12 月，需在窗口内拿到至少 1 个备份通道 alive</li>
-          <li>主流大牌（Stripe/Adyen/Worldpay 等 11 家）对 AI 陪聊全军覆没，别再耗时间</li>
-          <li>CCBill/Segpay/Epoch 在 5-6 因"英文成本"搁置，现在无退路必须重启</li>
-          <li>加密支付（NOWPayments）可作辅助通道储备 5-10% 流量</li>
-        </ul>
+        <h3 class="font-bold text-blue-700 mb-3 flex items-center gap-2">⏳ T3 — 2/4 待评估（${t3.length}）<span class="text-xs font-normal text-gray-500">需补 2 道资料</span></h3>
+        ${t3.length ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${t3.map(d => cardHTML(d, data.indexOf(d))).join('')}</div>` : '<p class="text-gray-400 text-sm">无</p>'}
       </div>
     </div>
   `;
 }
 
+// ============ 角色 × Gate 矩阵 ============
 function renderMatrix(root) {
-  const types = [...new Set(filtered.map(d=>d.type))].sort();
+  const roles = uniqueSorted(filtered.map(d=>d.role));
   const gates = ['✅ PASS', '⚠️ 条件PASS', '⚠️ 部分FAIL', '❌ FAIL', '⏳ 待评'];
 
   const matrix = {};
-  types.forEach(t => {
-    matrix[t] = {};
-    gates.forEach(g => { matrix[t][g] = filtered.filter(d => d.type === t && d.gate === g); });
+  roles.forEach(r => {
+    matrix[r] = {};
+    gates.forEach(g => { matrix[r][g] = filtered.filter(d => d.role === r && d.gate === g); });
   });
 
   root.innerHTML = `
@@ -531,23 +659,23 @@ function renderMatrix(root) {
       <table class="w-full text-sm">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-3 py-2 text-left text-xs uppercase text-gray-600">类型 \\ Gate</th>
+            <th class="px-3 py-2 text-left text-xs uppercase text-gray-600">角色 \\ Gate</th>
             ${gates.map(g => `<th class="px-3 py-2 text-center text-xs"><span class="badge ${gateClass(g)}">${g}</span></th>`).join('')}
             <th class="px-3 py-2 text-right text-xs uppercase text-gray-600">合计</th>
           </tr>
         </thead>
         <tbody>
-          ${types.map(t => {
-            const rowTotal = gates.reduce((sum, g) => sum + matrix[t][g].length, 0);
+          ${roles.map(r => {
+            const rowTotal = gates.reduce((sum, g) => sum + matrix[r][g].length, 0);
             return `
               <tr class="border-t">
-                <td class="px-3 py-2 font-medium text-gray-700">${t}</td>
+                <td class="px-3 py-2 font-medium text-gray-700">${r}</td>
                 ${gates.map(g => {
-                  const cell = matrix[t][g];
+                  const cell = matrix[r][g];
                   if (cell.length === 0) return `<td class="px-3 py-2 text-center text-gray-300">—</td>`;
-                  return `<td class="px-3 py-2 text-center">
+                  return `<td class="px-3 py-2 text-center align-top">
                     <div class="font-mono text-base font-semibold">${cell.length}</div>
-                    <div class="text-xs text-gray-500 mt-1">${cell.map(c=>c.name).join(', ')}</div>
+                    <div class="text-xs text-gray-500 mt-1 leading-tight">${cell.map(c=>c.name).join(', ')}</div>
                   </td>`;
                 }).join('')}
                 <td class="px-3 py-2 text-right font-mono font-semibold">${rowTotal}</td>
@@ -560,10 +688,11 @@ function renderMatrix(root) {
   `;
 }
 
+// ============ 统计 ============
 function renderStats(root) {
   const total = filtered.length;
   const by = (k) => { const m={}; filtered.forEach(d => m[d[k]] = (m[d[k]]||0)+1); return m; };
-  const byGate = by('gate'), byRec = by('rec'), byAI = by('ai'), byType = by('type');
+  const byGate = by('gate'), byRec = by('rec'), byAI = by('ai'), byRegion = by('region'), byRole = by('role');
 
   const renderBar = (obj, colorFn) => Object.entries(obj).sort((a,b)=>b[1]-a[1]).map(([k,v]) => `
     <div class="mb-2">
@@ -577,32 +706,31 @@ function renderStats(root) {
     </div>
   `).join('');
 
-  const gateColor = k => k.startsWith('✅')?'bg-emerald-500':k.startsWith('⚠️')?'bg-yellow-500':k.startsWith('❌')?'bg-red-500':'bg-blue-500';
   const aiColor = k => k==='✅可接'?'bg-emerald-500':k==='❌不接'?'bg-red-500':k==='⏳待问'?'bg-yellow-500':'bg-gray-400';
-  const recColor = k => k.includes('🏆')?'bg-purple-500':k.includes('🟢')?'bg-green-500':k.includes('P2')?'bg-blue-500':k.includes('观察')?'bg-indigo-400':k.includes('备选')?'bg-gray-400':k.includes('❌')?'bg-red-400':'bg-yellow-400';
+  const regionColor = () => 'bg-indigo-400';
+  const roleColor = () => 'bg-violet-400';
 
   root.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="bg-white rounded-lg shadow-sm border p-5">
         <h3 class="font-bold text-gray-900 mb-3">按 Gate 状态（${total} 条）</h3>
-        ${renderBar(byGate, gateColor)}
+        ${renderBar(byGate, gateBarColor)}
       </div>
       <div class="bg-white rounded-lg shadow-sm border p-5">
         <h3 class="font-bold text-gray-900 mb-3">按建议</h3>
-        ${renderBar(byRec, recColor)}
+        ${renderBar(byRec, recBarColor)}
       </div>
       <div class="bg-white rounded-lg shadow-sm border p-5">
         <h3 class="font-bold text-gray-900 mb-3">按 AI 陪聊接受度</h3>
         ${renderBar(byAI, aiColor)}
       </div>
       <div class="bg-white rounded-lg shadow-sm border p-5">
-        <h3 class="font-bold text-gray-900 mb-3">按类型 Top 10</h3>
-        ${Object.entries(byType).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([k,v]) => `
-          <div class="flex justify-between text-sm py-1 border-b last:border-b-0">
-            <span class="text-gray-700">${k}</span>
-            <span class="font-mono text-gray-500">${v}</span>
-          </div>
-        `).join('')}
+        <h3 class="font-bold text-gray-900 mb-3">按角色</h3>
+        ${renderBar(byRole, roleColor)}
+      </div>
+      <div class="bg-white rounded-lg shadow-sm border p-5 md:col-span-2">
+        <h3 class="font-bold text-gray-900 mb-3">按地区</h3>
+        ${renderBar(byRegion, regionColor)}
       </div>
     </div>
   `;
@@ -619,7 +747,7 @@ function showDetail(idx) {
       <div class="flex items-start justify-between">
         <div>
           <h2 class="text-2xl font-bold">${d.name}</h2>
-          <p class="text-sm opacity-90 mt-1">${d.type} · ${d.hq||'—'}</p>
+          <p class="text-sm opacity-90 mt-1">${d.region} · ${d.role} · ${d.hq||'—'}</p>
         </div>
         <button onclick="closeModal()" class="text-white/80 hover:text-white text-2xl leading-none">×</button>
       </div>
@@ -643,8 +771,8 @@ function showDetail(idx) {
       <div>
         <h3 class="text-sm font-bold text-gray-700 mb-2">综合评分</h3>
         <div class="grid grid-cols-2 gap-3">
-          ${scoreRow('业务一综合', (d.biz1||0).toFixed(2))}
-          ${scoreRow('业务二综合', (d.biz2||0).toFixed(2))}
+          ${scoreRow(BIZ_LABELS.biz1, (d.biz1||0).toFixed(2))}
+          ${scoreRow(BIZ_LABELS.biz2, (d.biz2||0).toFixed(2))}
         </div>
       </div>
       <div>
@@ -673,7 +801,8 @@ function openCompare() {
   const items = selected.map(i => data[i]);
   const rows = [
     ['通道名', items.map(d => `<strong>${d.name}</strong>`)],
-    ['类型', items.map(d => d.type)],
+    ['地区', items.map(d => d.region)],
+    ['角色', items.map(d => d.role)],
     ['HQ', items.map(d => d.hq||'—')],
     ['最大市场', items.map(d => d.max_market||'—')],
     ['覆盖地区', items.map(d => d.coverage||'—')],
@@ -685,13 +814,12 @@ function openCompare() {
     ['接入成本', items.map(d => d.cost||'—')],
     ['战略窗口', items.map(d => d.window)],
     ...DIMS.map(({key,label}) => [label, items.map(d => `<div class="flex items-center gap-2"><span class="font-mono font-semibold">${d[key]||0}</span><div class="flex-1 h-1.5 bg-gray-100 rounded"><div class="h-1.5 ${scoreColor(d[key]||0)} rounded" style="width:${(d[key]||0)*10}%"></div></div></div>`)]),
-    ['业务一综合', items.map(d => `<span class="font-mono font-bold text-lg">${(d.biz1||0).toFixed(2)}</span>`)],
-    ['业务二综合', items.map(d => `<span class="font-mono font-bold text-lg">${(d.biz2||0).toFixed(2)}</span>`)],
+    [BIZ_LABELS.biz1, items.map(d => `<span class="font-mono font-bold text-lg">${(d.biz1||0).toFixed(2)}</span>`)],
+    [BIZ_LABELS.biz2, items.map(d => `<span class="font-mono font-bold text-lg">${(d.biz2||0).toFixed(2)}</span>`)],
     ['核心差异化', items.map(d => `<div class="text-xs leading-relaxed">${d.diff||'—'}</div>`)]
   ];
 
-  // 找出每行的差异
-  const rowDiffs = rows.map(([label, vals]) => {
+  const rowDiffs = rows.map(([_, vals]) => {
     const stripped = vals.map(v => typeof v === 'string' ? v.replace(/<[^>]+>/g,'').trim() : v);
     const allSame = stripped.every(v => v === stripped[0]);
     return !allSame;
@@ -739,8 +867,8 @@ function closeCompare() { document.getElementById('compare-modal').classList.add
 
 // ============ CSV 导出 ============
 function exportCSV() {
-  const cols = ['通道名','类型','Gate','建议','驱动级','HK直签','接AI','HQ','最大市场','覆盖地区','订阅','费率','市场','拒付','多商户','账期','战略窗口','接入成本','业务一综合','业务二综合','核心差异化'];
-  const keys = ['name','type','gate','rec','driver','hk','ai','hq','max_market','coverage','sub','rate','market','cb','multi','settle','window','cost','biz1','biz2','diff'];
+  const cols = ['通道名','地区','角色','Gate','建议','驱动级','HK直签','接AI','HQ','最大市场','覆盖地区','订阅','费率','市场','拒付','多商户','账期','战略窗口','接入成本',BIZ_LABELS.biz1,BIZ_LABELS.biz2,'核心差异化'];
+  const keys = ['name','region','role','gate','rec','driver','hk','ai','hq','max_market','coverage','sub','rate','market','cb','multi','settle','window','cost','biz1','biz2','diff'];
   const esc = v => `"${(v??'').toString().replace(/"/g,'""').replace(/\n/g,' ')}"`;
   const csv = [cols.join(',')].concat(filtered.map(d => keys.map(k => esc(d[k])).join(','))).join('\n');
   const blob = new Blob(['﻿' + csv], {type: 'text/csv;charset=utf-8'});
