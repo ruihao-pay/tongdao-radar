@@ -1,5 +1,5 @@
 // 通道雷达数据 - 最后更新 2026-05-20 v3
-// 共 121 条 (104 + Antom子方式东南亚11+东亚3+韩国3，分批入库中→目标136)
+// 共 128 条 (104 + Antom子方式东南亚11+东亚3+韩国3+欧洲7，分批入库中→目标136)
 // schema: 新增 region(地区) + role(角色) 两个维度，替代原单一 type
 // role 新增"支付辅助服务"类目(跨拒通拒付管理 / 反欺诈 / 风控类)
 window.CHANNELS_DATA = [
@@ -169,7 +169,15 @@ window.CHANNELS_DATA = [
   // 韩国(3)
   {name:"KakaoPay (Antom·韩)",region:"韩国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🔵 可评直连",driver:"L3 战略窗口",hq:"韩国",max_market:"韩国",coverage:"KR",sub:6.5,rate:6,market:7.5,cb:8,multi:7,settle:5.5,window:1,cost:"中 1.5",diff:"3.0%韩国国民钱包。金矿市场+国民级覆盖→直连必要性中,值得单独评估",biz1:6.73,biz2:6.78,ai:"❌随Antom"},
   {name:"NAVER Pay (Antom·韩)",region:"韩国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"韩国",max_market:"韩国",coverage:"KR",sub:6,rate:5.5,market:7,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.3%。韩国次级钱包,直连必要性中低",biz1:6.38,biz2:6.48,ai:"❌随Antom"},
-  {name:"Toss Pay (Antom·韩)",region:"韩国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"韩国",max_market:"韩国",coverage:"KR",sub:6,rate:5.5,market:6.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.3%。韩国次级钱包,直连必要性中低",biz1:6.30,biz2:6.38,ai:"❌随Antom"}
+  {name:"Toss Pay (Antom·韩)",region:"韩国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"韩国",max_market:"韩国",coverage:"KR",sub:6,rate:5.5,market:6.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.3%。韩国次级钱包,直连必要性中低",biz1:6.30,biz2:6.38,ai:"❌随Antom"},
+  // 欧洲(7)
+  {name:"PayU (Antom·波)",region:"波兰",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"波兰",max_market:"波兰/中东欧",coverage:"PL",sub:6,rate:8,market:6,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"1.9%网关。中东欧网关,与独立 PayU Global 区分,直连必要性中低",biz1:6.85,biz2:6.65,ai:"❌随Antom"},
+  {name:"BLIK (Antom·波)",region:"波兰",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"波兰",max_market:"波兰",coverage:"PL",sub:4.5,rate:8.5,market:6.5,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"1.6%国民支付。费率低直连无收益→留Antom",biz1:6.70,biz2:6.50,ai:"❌随Antom"},
+  {name:"BANCOMAT Pay (Antom·意)",region:"意大利",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"意大利",max_market:"意大利",coverage:"IT",sub:4,rate:9.5,market:5,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"A2A 1.0%。费率全场最低之一,直连必要性低",biz1:6.58,biz2:6.23,ai:"❌随Antom"},
+  {name:"Przelewy24 (Antom·波)",region:"波兰",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"波兰",max_market:"波兰",coverage:"PL",sub:4.5,rate:8,market:6,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"A2A 1.9%。波兰转账聚合,直连必要性低",biz1:6.40,biz2:6.28,ai:"❌随Antom"},
+  {name:"EPS (Antom·奥)",region:"奥地利",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"奥地利",max_market:"奥地利",coverage:"AT",sub:4,rate:8.5,market:4.5,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"A2A 1.5%。奥地利网银,直连必要性低",biz1:6.25,biz2:5.97,ai:"❌随Antom"},
+  {name:"iDEAL (Antom·荷)",region:"荷兰",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"荷兰",max_market:"荷兰",coverage:"NL",sub:4,rate:7,market:6,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"EUR0.20固定/笔。荷兰国民A2A,直连必要性低",biz1:6.10,biz2:6.05,ai:"❌随Antom"},
+  {name:"Bancontact (Antom·比)",region:"比利时",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"比利时",max_market:"比利时",coverage:"BE",sub:4,rate:7,market:5,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"EUR0.25固定/笔。比利时国民卡,直连必要性低",biz1:5.95,biz2:5.85,ai:"❌随Antom"}
 ];
 
 // 业务定义（可扩展）
@@ -195,6 +203,6 @@ window.BIZ_LABELS = {
 // 元数据
 window.META = {
   lastUpdated: "2026-05-20",
-  totalCount: 121,
+  totalCount: 128,
   feishuUrl: "https://gcn9eq0plpq9.feishu.cn/base/QLySbEoyVae0pZsDjqucUGHKnGe?table=tblxC8TQmax7De1s&view=vewCBixMon"
 };
