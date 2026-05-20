@@ -1,5 +1,5 @@
 // 通道雷达数据 - 最后更新 2026-05-20 v3
-// 共 118 条 (104 + Antom子方式东南亚11+东亚3，分批入库中→目标136)
+// 共 121 条 (104 + Antom子方式东南亚11+东亚3+韩国3，分批入库中→目标136)
 // schema: 新增 region(地区) + role(角色) 两个维度，替代原单一 type
 // role 新增"支付辅助服务"类目(跨拒通拒付管理 / 反欺诈 / 风控类)
 window.CHANNELS_DATA = [
@@ -165,7 +165,11 @@ window.CHANNELS_DATA = [
   // 东亚(3)
   {name:"Alipay HK (Antom·港)",region:"香港",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"香港",max_market:"香港",coverage:"HK",sub:6,rate:7.5,market:5.5,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"2.2%。蚂蚁系HK钱包,费率低直连无收益→留Antom",biz1:6.75,biz2:6.52,ai:"❌随Antom"},
   {name:"Alipay CN (Antom·华)",region:"中国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"中国",max_market:"中国",coverage:"CN",sub:6,rate:7.5,market:5,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"2.0%。蚂蚁系本家,直连必要性低",biz1:6.67,biz2:6.42,ai:"❌随Antom"},
-  {name:"JkoPay (Antom·台)",region:"台湾",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"台湾",max_market:"台湾",coverage:"TW",sub:5.5,rate:4,market:7,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"D&E翻倍7%/其他2.5%。台湾国民钱包但D&E贵+签不上→直连必要性中",biz1:5.85,biz2:6.12,ai:"❌随Antom"}
+  {name:"JkoPay (Antom·台)",region:"台湾",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"台湾",max_market:"台湾",coverage:"TW",sub:5.5,rate:4,market:7,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"D&E翻倍7%/其他2.5%。台湾国民钱包但D&E贵+签不上→直连必要性中",biz1:5.85,biz2:6.12,ai:"❌随Antom"},
+  // 韩国(3)
+  {name:"KakaoPay (Antom·韩)",region:"韩国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🔵 可评直连",driver:"L3 战略窗口",hq:"韩国",max_market:"韩国",coverage:"KR",sub:6.5,rate:6,market:7.5,cb:8,multi:7,settle:5.5,window:1,cost:"中 1.5",diff:"3.0%韩国国民钱包。金矿市场+国民级覆盖→直连必要性中,值得单独评估",biz1:6.73,biz2:6.78,ai:"❌随Antom"},
+  {name:"NAVER Pay (Antom·韩)",region:"韩国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"韩国",max_market:"韩国",coverage:"KR",sub:6,rate:5.5,market:7,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.3%。韩国次级钱包,直连必要性中低",biz1:6.38,biz2:6.48,ai:"❌随Antom"},
+  {name:"Toss Pay (Antom·韩)",region:"韩国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"韩国",max_market:"韩国",coverage:"KR",sub:6,rate:5.5,market:6.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.3%。韩国次级钱包,直连必要性中低",biz1:6.30,biz2:6.38,ai:"❌随Antom"}
 ];
 
 // 业务定义（可扩展）
@@ -191,6 +195,6 @@ window.BIZ_LABELS = {
 // 元数据
 window.META = {
   lastUpdated: "2026-05-20",
-  totalCount: 118,
+  totalCount: 121,
   feishuUrl: "https://gcn9eq0plpq9.feishu.cn/base/QLySbEoyVae0pZsDjqucUGHKnGe?table=tblxC8TQmax7De1s&view=vewCBixMon"
 };
