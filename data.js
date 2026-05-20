@@ -1,5 +1,5 @@
 // 通道雷达数据 - 最后更新 2026-05-20 v3
-// 共 134 条 (104 + Antom子方式东南亚11+东亚3+韩国3+欧洲7+拉美6，分批入库中→目标136)
+// 共 136 条 (104 + Antom子方式32:东南亚11+东亚3+韩国3+欧洲7+拉美6+全球卡2，入库完成)
 // schema: 新增 region(地区) + role(角色) 两个维度，替代原单一 type
 // role 新增"支付辅助服务"类目(跨拒通拒付管理 / 反欺诈 / 风控类)
 window.CHANNELS_DATA = [
@@ -184,7 +184,10 @@ window.CHANNELS_DATA = [
   {name:"Mercado Pago (Antom·智利)",region:"智利",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"阿根廷",max_market:"智利",coverage:"CL",sub:6,rate:5.5,market:5.5,cb:7,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.5%。智利站点,直连必要性中低",biz1:5.95,biz2:6.08,ai:"❌随Antom"},
   {name:"Mercado Pago (Antom·墨西哥)",region:"墨西哥",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"阿根廷",max_market:"墨西哥",coverage:"MX",sub:6,rate:5,market:6,cb:7,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.6%。墨西哥站点,直连必要性中低",biz1:5.90,biz2:6.10,ai:"❌随Antom"},
   {name:"Pagaleve (Antom·巴西)",region:"巴西",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"巴西",max_market:"巴西",coverage:"BR",sub:4,rate:6,market:5.5,cb:7,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.2% BNPL。巴西先买后付,直连必要性低",biz1:5.48,biz2:5.65,ai:"❌随Antom"},
-  {name:"Mercado Pago (Antom·秘鲁)",region:"秘鲁",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"阿根廷",max_market:"秘鲁",coverage:"PE",sub:6,rate:4,market:4.5,cb:7,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"4.8%偏贵。秘鲁站点,直连必要性中",biz1:5.42,biz2:5.65,ai:"❌随Antom"}
+  {name:"Mercado Pago (Antom·秘鲁)",region:"秘鲁",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"阿根廷",max_market:"秘鲁",coverage:"PE",sub:6,rate:4,market:4.5,cb:7,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"4.8%偏贵。秘鲁站点,直连必要性中",biz1:5.42,biz2:5.65,ai:"❌随Antom"},
+  // 全球卡(2)
+  {name:"Visa (Antom·全球卡)",region:"全球",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🔴 已在直连",driver:"L1 客户订单",hq:"美国",max_market:"全球",coverage:"全球",sub:7,rate:5,market:9,cb:5,multi:7,settle:5.5,window:1,cost:"中 1.5",diff:"本地3.2%/跨境3.9%贵+全球覆盖→直连必要性高,但等于美区直连卡课题(Stripe/领航/Checkout),闲闲项目已在做",biz1:6.25,biz2:6.75,ai:"❌随Antom"},
+  {name:"Mastercard (Antom·全球卡)",region:"全球",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🔴 已在直连",driver:"L1 客户订单",hq:"美国",max_market:"全球",coverage:"全球",sub:7,rate:5,market:9,cb:5,multi:7,settle:5.5,window:1,cost:"中 1.5",diff:"本地3.2%/跨境3.9%贵+全球覆盖→直连必要性高,但等于美区直连卡课题(Stripe/领航/Checkout),闲闲项目已在做",biz1:6.25,biz2:6.75,ai:"❌随Antom"}
 ];
 
 // 业务定义（可扩展）
@@ -210,6 +213,6 @@ window.BIZ_LABELS = {
 // 元数据
 window.META = {
   lastUpdated: "2026-05-20",
-  totalCount: 134,
+  totalCount: 136,
   feishuUrl: "https://gcn9eq0plpq9.feishu.cn/base/QLySbEoyVae0pZsDjqucUGHKnGe?table=tblxC8TQmax7De1s&view=vewCBixMon"
 };
