@@ -29,6 +29,11 @@
   .biz-pill { padding: 6px 14px; border-radius: 9999px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid #e5e7eb; background: white; }
   .biz-pill.active { background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
   @media (max-width: 640px) { .hide-mobile { display: none; } }
+  /* 折叠分组 */
+  details.tier-group > summary { list-style: none; }
+  details.tier-group > summary::-webkit-details-marker { display: none; }
+  details.tier-group > summary .arrow { display: inline-block; transition: transform 0.15s; }
+  details.tier-group[open] > summary .arrow { transform: rotate(90deg); }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -484,9 +489,32 @@ function sortByRec(list) {
 
 function renderCards(root) {
   if (filtered.length === 0) return root.innerHTML = '<p class="text-center text-gray-400 py-12">没有匹配的通道</p>';
-  const sorted = sortByRec(filtered);
-  root.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">` +
-    sorted.map(d => cardHTML(d, data.indexOf(d))).join('') + `</div>`;
+
+  // 分层:主力 / Antom 子方式 / 已淘汰(Gate FAIL),让主力通道不被稀释
+  const main = [], sub = [], retired = [];
+  filtered.forEach(d => {
+    if ((d.gate||'').includes('❌')) retired.push(d);
+    else if (d.role === 'Antom子方式') sub.push(d);
+    else main.push(d);
+  });
+
+  const grid = (list) => `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">` +
+    sortByRec(list).map(d => cardHTML(d, data.indexOf(d))).join('') + `</div>`;
+
+  const group = (list, title, note, open) => !list.length ? '' : `
+    <details class="tier-group mt-6" ${open?'open':''}>
+      <summary class="cursor-pointer select-none flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-semibold text-gray-700">
+        <span class="arrow text-gray-400">▶</span>
+        ${title} <span class="badge bg-gray-200 text-gray-600">${list.length}</span>
+        <span class="font-normal text-gray-500 text-xs hide-mobile">${note}</span>
+      </summary>
+      <div class="mt-4">${grid(list)}</div>
+    </details>`;
+
+  let html = main.length ? grid(main) : '<p class="text-center text-gray-400 py-8">无主力通道(已全部折叠在下方)</p>';
+  html += group(sub, 'Antom 子方式', '— 多为"留 Antom",一般无需单独决策', main.length === 0);
+  html += group(retired, '已淘汰 / Gate FAIL', '— 不可签约,仅留档', main.length === 0 && sub.length === 0);
+  root.innerHTML = html;
 }
 
 function cardHTML(d, idx) {
