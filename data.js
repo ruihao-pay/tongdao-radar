@@ -1,5 +1,5 @@
 // 通道雷达数据 - 最后更新 2026-05-20 v3
-// 共 104 条 (v2 99 + 新增 VailPay/StablePay/跨拒通 3 条 + PayerMax + Oceanpayment)
+// 共 115 条 (104 + Antom子方式东南亚11，分批入库中→目标136)
 // schema: 新增 region(地区) + role(角色) 两个维度，替代原单一 type
 // role 新增"支付辅助服务"类目(跨拒通拒付管理 / 反欺诈 / 风控类)
 window.CHANNELS_DATA = [
@@ -147,7 +147,21 @@ window.CHANNELS_DATA = [
   {name:"2Checkout / Verifone",region:"全球",role:"MoR",gate:"⚠️ 条件PASS",hk:"⚠️",rec:"备选",driver:"L5 观察",hq:"美国",max_market:"全球",coverage:"全球",sub:7,rate:5,market:7,cb:6,multi:6,settle:6,window:0,cost:"中 1.5",diff:"主流 MoR 中风险接受度相对高，需问类目",biz1:6,biz2:5.5,ai:"⏳待问"},
 
   // ========== 支付辅助服务 (拒付管理 / 反欺诈 / 风控) ==========
-  {name:"跨拒通",region:"全球",role:"支付辅助服务",gate:"✅ PASS",hk:"✅",rec:"🟢 已锁接入",driver:"L1 客户订单",hq:"中国",max_market:"跨境拒付管理",coverage:"全球",sub:0,rate:0,market:0,cb:9.5,multi:0,settle:0,window:0,cost:"轻 1.0",diff:"专做信用卡拒付管理,4 项服务:反欺诈($0.05/笔)+预警(RDR 90%/Ethoca 70%拦截)+抗辩(15%→60%胜诉)+包赔(0.6-0.7%费率)。闲闲合作 5-13 落地,信息隔离可行不需 SDK,PCI-DSS+GDPR 认证。创始人裴总,2026-05-08 通话纪要",biz1:0,biz2:0,ai:"✅可接"}
+  {name:"跨拒通",region:"全球",role:"支付辅助服务",gate:"✅ PASS",hk:"✅",rec:"🟢 已锁接入",driver:"L1 客户订单",hq:"中国",max_market:"跨境拒付管理",coverage:"全球",sub:0,rate:0,market:0,cb:9.5,multi:0,settle:0,window:0,cost:"轻 1.0",diff:"专做信用卡拒付管理,4 项服务:反欺诈($0.05/笔)+预警(RDR 90%/Ethoca 70%拦截)+抗辩(15%→60%胜诉)+包赔(0.6-0.7%费率)。闲闲合作 5-13 落地,信息隔离可行不需 SDK,PCI-DSS+GDPR 认证。创始人裴总,2026-05-08 通话纪要",biz1:0,biz2:0,ai:"✅可接"},
+
+  // ========== Antom 子方式 (聚合旗下具体支付方式·判直连必要性) ==========
+  // 东南亚(11)
+  {name:"TNG eWallet (Antom·马)",region:"马来",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"马来西亚",max_market:"马来西亚",coverage:"MY",sub:6,rate:8,market:7,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"本地1.6%/跨2.5%。费率已极低,直连省不了钱→留Antom聚合最优",biz1:7.10,biz2:6.90,ai:"❌随Antom"},
+  {name:"GCash (Antom·菲)",region:"菲律宾",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"菲律宾",max_market:"菲律宾",coverage:"PH",sub:6,rate:7,market:7.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"2.5%。菲国民钱包,但强制本地实体签不上→直连必要性中低",biz1:6.83,biz2:6.80,ai:"❌随Antom"},
+  {name:"PromptPay (Antom·泰)",region:"泰国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"泰国",max_market:"泰国",coverage:"TH",sub:4,rate:8.5,market:8,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"央行QR 1.6%。泰国D&E运营杠杆点:引导用户走此替代LINEPay8%/TrueMoney7%,省6pp+",biz1:6.78,biz2:6.67,ai:"❌随Antom"},
+  {name:"PayNow (Antom·新)",region:"新加坡",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"新加坡",max_market:"新加坡",coverage:"SG",sub:4,rate:9.5,market:6.5,cb:8.5,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"A2A 1.0%。费率全场最低之一,直连无收益→留Antom",biz1:6.80,biz2:6.52,ai:"❌随Antom"},
+  {name:"Boost (Antom·马)",region:"马来",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"马来西亚",max_market:"马来西亚",coverage:"MY",sub:5.5,rate:7,market:6.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"2.5%。马来次级钱包,直连必要性低",biz1:6.52,biz2:6.47,ai:"❌随Antom"},
+  {name:"BPI (Antom·菲)",region:"菲律宾",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"菲律宾",max_market:"菲律宾",coverage:"PH",sub:5,rate:7,market:6.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"2.5%银行。菲银行渠道,直连必要性低",biz1:6.37,biz2:6.35,ai:"❌随Antom"},
+  {name:"TrueMoney (Antom·泰)",region:"泰国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"泰国",max_market:"泰国",coverage:"TH",sub:6,rate:4,market:7,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"D&E翻倍7%太贵+签不上,运营上引导走PromptPay替代→直连必要性中",biz1:6.00,biz2:6.25,ai:"❌随Antom"},
+  {name:"泰国6家网银 (Antom·泰)",region:"泰国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"泰国",max_market:"泰国",coverage:"TH",sub:5,rate:5.5,market:6.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"3.75%网银直连。一签覆盖泰6行,直连必要性低",biz1:6.00,biz2:6.12,ai:"❌随Antom"},
+  {name:"Kredivo (Antom·印尼)",region:"印尼",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"印尼",max_market:"印尼",coverage:"ID",sub:4,rate:7,market:6.5,cb:7,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"2.5% BNPL。印尼先买后付,直连必要性低",biz1:5.88,biz2:6.00,ai:"❌随Antom"},
+  {name:"LINEPay (Antom·泰)",region:"泰国",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"泰国",max_market:"泰国",coverage:"TH",sub:6,rate:3.5,market:6.5,cb:8,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"D&E翻倍8%最贵+签不上,运营上引导走PromptPay替代→直连必要性中",biz1:5.80,biz2:6.08,ai:"❌随Antom"},
+  {name:"BillEase (Antom·菲)",region:"菲律宾",role:"Antom子方式",gate:"✅ PASS",hk:"✅",rec:"🟡 留Antom",driver:"L5 观察",hq:"菲律宾",max_market:"菲律宾",coverage:"PH",sub:4,rate:6.5,market:6,cb:7,multi:7,settle:5.5,window:0,cost:"中 1.5",diff:"2.9% BNPL。菲先买后付,直连必要性低",biz1:5.67,biz2:5.83,ai:"❌随Antom"}
 ];
 
 // 业务定义（可扩展）
@@ -173,6 +187,6 @@ window.BIZ_LABELS = {
 // 元数据
 window.META = {
   lastUpdated: "2026-05-20",
-  totalCount: 104,
+  totalCount: 115,
   feishuUrl: "https://gcn9eq0plpq9.feishu.cn/base/QLySbEoyVae0pZsDjqucUGHKnGe?table=tblxC8TQmax7De1s&view=vewCBixMon"
 };
