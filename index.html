@@ -141,7 +141,8 @@
   锐浩 · Arcane Brilliance Limited · 持续更新中
 </footer>
 
-<script src="data.js"></script>
+<!-- cache busting:每次加载都带时间戳,避免 GitHub Pages 浏览器缓存导致看不到最新 data.js -->
+<script>document.write('<script src="data.js?t=' + Date.now() + '"><\/script>');</script>
 <script>
 const data = window.CHANNELS_DATA || [];
 const META = window.META || {};
