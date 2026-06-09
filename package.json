@@ -1,9 +1,11 @@
 {
+  "type": "module",
   "scripts": {
-    "check": "node --check src/worker.js && npx wrangler deploy --dry-run",
+    "check": "node --check src/worker.js && npm test && npx wrangler deploy --dry-run",
     "deploy": "npx wrangler deploy",
     "whoami": "npx wrangler whoami",
-    "login": "npx wrangler login"
+    "login": "npx wrangler login",
+    "test": "node --test"
   },
   "devDependencies": {
     "wrangler": "^4.98.0"
