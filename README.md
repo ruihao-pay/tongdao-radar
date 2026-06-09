@@ -36,7 +36,7 @@ https://ruihao-pay.github.io/tongdao-radar/
 https://<worker-domain>/auth/callback
 ```
 
-Worker 需要配置以下变量或 secrets：
+Cloudflare 登录后，Worker 需要配置以下变量或 secrets：
 
 ```bash
 wrangler secret put FEISHU_APP_ID
@@ -69,7 +69,9 @@ wrangler secret put ALLOWED_EMAIL_DOMAINS
 本地确认 `private-app/index.html` 和 `private-app/data.js` 是最新真实看板后执行：
 
 ```bash
-npx wrangler deploy
+npm run check
+npm run login
+npm run deploy
 ```
 
 部署完成后，实际业务访问链接应使用 Worker 域名或绑定的自定义域名，而不是 GitHub Pages 链接。
