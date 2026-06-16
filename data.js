@@ -1,4 +1,4 @@
-// 通道雷达数据 - 最后更新 2026-06-09 v4
+// 通道雷达数据 - 最后更新 2026-06-16 v5
 // 共 136 条 (104 + Antom子方式32:东南亚11+东亚3+韩国3+欧洲7+拉美6+全球卡2，入库完成)
 // schema: 新增 region(地区) + role(角色) 两个维度，替代原单一 type
 // role 新增"支付辅助服务"类目(跨拒通拒付管理 / 反欺诈 / 风控类)
@@ -364,7 +364,7 @@ window.BIZ_LABELS = {
 
 // 元数据
 window.META = {
-  lastUpdated: "2026-06-09",
+  lastUpdated: "2026-06-16",
   totalCount: 136,
   feishuUrl: "https://gcn9eq0plpq9.feishu.cn/base/QLySbEoyVae0pZsDjqucUGHKnGe?table=tblxC8TQmax7De1s&view=vewCBixMon"
 };
