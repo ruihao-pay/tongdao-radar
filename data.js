@@ -205,6 +205,7 @@ window.CONNECTED_CHANNELS = [
   {
     name: "跨拒通",
     category: "拒付预警 / 抗辩 / 反欺诈",
+    group: "auxiliary",
     directStatus: "已签约落地",
     stage: "2026-05-13 合作落地;月底卡通道接入后正式申请",
     fee: "反欺诈 $0.05/笔;RDR $12/笔;Ethoca $18/笔;抗辩胜诉金额 9%;包赔需历史数据评估",
@@ -282,6 +283,7 @@ window.CONNECTED_CHANNELS = [
   {
     name: "Airwallex / 云汇",
     category: "资金归集 / 全球账户",
+    group: "auxiliary",
     directStatus: "辅助账户",
     stage: "用于 USD 虚拟账户和出入金链路评估;不是高风险收单主通道",
     fee: "收款入账固定 0.3%;SWIFT 外币出金约 $3-25/笔",
@@ -289,6 +291,18 @@ window.CONNECTED_CHANNELS = [
     fit: "正规业务资金归集、USD/HKD/SGD 全球账户、低风险 SaaS/工具类结算",
     limit: "AUP 明确禁成人/擦边;不适合归集闲闲等成人/高风险资金",
     source: "闲闲资金归集合规风险 / 当前进行中"
+  },
+  {
+    name: "光子",
+    category: "收款机构线索 / 辅助收款资源",
+    group: "auxiliary",
+    directStatus: "前期接触中",
+    stage: "前期接触中;具体主体、能力边界和适配客户待补",
+    fee: "待补",
+    settlement: "待补",
+    fit: "待补",
+    limit: "当前信息较少,不能作为可报价渠道;后续补公司主体、牌照/合规背景、可接类目、费率账期和资金责任边界",
+    source: "项目/光子/客户档案"
   }
 ];
 

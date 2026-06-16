@@ -174,6 +174,7 @@ const RESET_IDS = ['filter-region','filter-role','filter-gate','filter-rec','fil
 let currentTab = 'decision';
 let currentView = 'cards';
 let currentBiz = (BUSINESSES[0] && BUSINESSES[0].id) || 'xianxian';
+let connectedSubTab = 'main';
 let filtered = [...data];
 let selected = [];
 
@@ -232,6 +233,12 @@ function bindEvents() {
   document.getElementById('view-table').addEventListener('click', () => setView('table'));
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => setTab(btn.dataset.tab));
+  });
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-connected-subtab]');
+    if (!btn) return;
+    connectedSubTab = btn.dataset.connectedSubtab;
+    render();
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeModal(); closeCompare(); }
@@ -671,10 +678,14 @@ function connectedStatusClass(status) {
 }
 
 function renderConnected(root) {
-  const active = CONNECTED_CHANNELS.filter(c => !c.directStatus.includes('暂停'));
+  const mainChannels = CONNECTED_CHANNELS.filter(c => c.group !== 'auxiliary');
+  const auxiliaryChannels = CONNECTED_CHANNELS.filter(c => c.group === 'auxiliary');
+  const visibleChannels = connectedSubTab === 'auxiliary' ? auxiliaryChannels : mainChannels;
+  const active = visibleChannels.filter(c => !c.directStatus.includes('暂停'));
   const directLike = CONNECTED_CHANNELS.filter(c => c.directStatus.includes('代理接入') || c.directStatus.includes('已签约') || c.directStatus.includes('内部合作') || c.directStatus.includes('已开通'));
   const paused = CONNECTED_CHANNELS.filter(c => c.directStatus.includes('暂停'));
   const review = CONNECTED_CHANNELS.filter(c => c.directStatus.includes('审评'));
+  const subTabClass = (id) => id === connectedSubTab ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50';
 
   root.innerHTML = `
     <div class="space-y-5">
@@ -720,6 +731,13 @@ function renderConnected(root) {
         </div>
       </div>
 
+      <div class="bg-white border rounded-lg p-2 shadow-sm">
+        <div class="flex gap-2 overflow-x-auto">
+          <button data-connected-subtab="main" class="connected-subtab-btn px-3 py-2 rounded border text-sm font-medium whitespace-nowrap ${subTabClass('main')}">收单主通道 (${mainChannels.length})</button>
+          <button data-connected-subtab="auxiliary" class="connected-subtab-btn px-3 py-2 rounded border text-sm font-medium whitespace-nowrap ${subTabClass('auxiliary')}">辅助服务/账户 (${auxiliaryChannels.length})</button>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         ${active.map(c => `
           <div class="bg-white border rounded-lg p-4 shadow-sm">
@@ -745,20 +763,20 @@ function renderConnected(root) {
           <span class="text-xs text-gray-500">费率为当前内部档案口径,给客户报价前仍需按类目、流水、主体资料复核。</span>
         </div>
         <div class="overflow-x-auto">
-          <table class="w-full text-sm">
+          <table class="w-full min-w-[1900px] table-fixed text-sm">
             <thead class="bg-gray-50 text-xs text-gray-600">
               <tr>
-                <th class="px-3 py-2 text-left whitespace-nowrap">渠道</th>
-                <th class="px-3 py-2 text-left whitespace-nowrap">直连状态</th>
-                <th class="px-3 py-2 text-left min-w-[220px]">当前阶段</th>
-                <th class="px-3 py-2 text-left min-w-[260px]">费率</th>
-                <th class="px-3 py-2 text-left min-w-[220px]">账期 / 结算</th>
-                <th class="px-3 py-2 text-left min-w-[260px]">适合业务</th>
-                <th class="px-3 py-2 text-left min-w-[260px]">限制 / 注意</th>
+                <th class="px-3 py-2 text-left w-[180px]">渠道</th>
+                <th class="px-3 py-2 text-left w-[150px]">直连状态</th>
+                <th class="px-3 py-2 text-left w-[280px]">当前阶段</th>
+                <th class="px-3 py-2 text-left w-[360px]">费率</th>
+                <th class="px-3 py-2 text-left w-[300px]">账期 / 结算</th>
+                <th class="px-3 py-2 text-left w-[340px]">适合业务</th>
+                <th class="px-3 py-2 text-left w-[290px]">限制 / 注意</th>
               </tr>
             </thead>
             <tbody class="divide-y">
-              ${CONNECTED_CHANNELS.map(c => `
+              ${visibleChannels.map(c => `
                 <tr class="hover:bg-gray-50 align-top">
                   <td class="px-3 py-3">
                     <div class="font-semibold text-gray-900 whitespace-nowrap">${c.name}</div>
