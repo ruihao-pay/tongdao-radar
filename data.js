@@ -217,8 +217,8 @@ window.CONNECTED_CHANNELS = [
   {
     name: "领航",
     category: "美区信用卡 / PP 上游转接",
-    directStatus: "已解除暂停",
-    stage: "已解除暂停,当前可恢复推进;已签约路径,合同 v0.6 仍在最终评审;成人信用卡通道尚需持续确认可用性",
+    directStatus: "已接触暂停",
+    stage: "已接触但当前暂停推进;已签约路径,合同 v0.6 仍在最终评审;成人信用卡通道尚需持续确认可用性",
     fee: "信用卡 12%→10%→8%→7%→6%;PP 10.4%→8%→6%→4.4%;美主体资料费 $2,000/套",
     settlement: "账期待合同最终确认;延迟结算 >15 日赔偿条款仍在协商",
     fit: "美区成人/AI 陪聊/高风险卡支付,尤其是 Stripe/Antom 明确禁入的业务",
@@ -257,6 +257,28 @@ window.CONNECTED_CHANNELS = [
     fit: "正规 AI 工具/SaaS 的全球卡备选;东南亚/日韩港澳台本地支付补位;Stripe/Antom 审核或覆盖不足时的 Plan B",
     limit: "仅代表绿色业务报价,不能外推成人/高风险类目;全球卡固定费 $0.50 对低客单价订阅仍重;提现 1% 抬高总成本;T+10 慢于 Antom/部分 Stripe;订阅生态和品牌认知弱于 Stripe;越南游戏需 G1 License",
     source: "Waffo quotation sheet to 深圳泰济-V1-2026-06-16.pdf / 渠道BD跟进/Waffo"
+  },
+  {
+    name: "AIPowerPay",
+    category: "一站式跨境支付 / 全球卡 + 本地支付",
+    directStatus: "已接触暂停",
+    stage: "已收到 AIPowerPay 一站式跨境支付刊例;当前处于已接触但暂停推进,费率账期和可接类目仍需补问商务",
+    fee: "待补:已有刊例,但未形成可报价费率表",
+    settlement: "待补",
+    fit: "跨境收单、全球卡、本地支付、正规 AI 工具/SaaS、出海数字内容",
+    limit: "当前不能作为可报价渠道;需先确认 HK/新加坡主体签约路径、AI/擦边类目接受度、拒付处理、保证金、账期和资金流责任",
+    source: "AIPowerPay：一站式跨境支付解决方案 (4).pdf"
+  },
+  {
+    name: "Segpay / Epoch",
+    category: "成人 / 高风险老牌收单",
+    directStatus: "搁置可重启",
+    stage: "2026-05 已接触后搁置;作为高风险/成人类目兜底备选,若 Antom/Waffo/领航路径失败可重启",
+    fee: "待补:历史预估约 13%-15% 区间,正式报价需重新向商务确认",
+    settlement: "待补",
+    fit: "成人内容、AI 陪聊、高风险订阅、欧美卡收单兜底",
+    limit: "纯英文沟通和合规材料成本较高;费率通常不低;重启前需确认类目、reserve、拒付红线、账期和主体要求",
+    source: "渠道BD跟进/已淘汰渠道 / 闲闲美区通道全清单"
   },
   {
     name: "AnstPay",
@@ -303,6 +325,18 @@ window.CONNECTED_CHANNELS = [
     fit: "待补",
     limit: "当前信息较少,不能作为可报价渠道;后续补公司主体、牌照/合规背景、可接类目、费率账期和资金责任边界",
     source: "项目/光子/客户档案"
+  },
+  {
+    name: "Payinsider",
+    category: "支付编排 / 智能路由 / 顾问服务",
+    group: "auxiliary",
+    directStatus: "已拜访暂缓",
+    stage: "2026-05-28 已线下拜访王玲并看产品演示;当前因 $2,500/月固定费更适合大客户,锐浩小体量客户暂缓直接采用",
+    fee: "基础费约 $2,500/月;含包量和超量单价按 Payinsider 报价复核",
+    settlement: "不承接商户资金;自身不做收单结算,用于多通道路由、失败重试和支付顾问",
+    fit: "月流水较大的正规 AI/SaaS、多通道编排、续费失败重试、支付数据诊断、客户已有多个 MID 的场景",
+    limit: "不是收单主通道;不解决高风险类目准入;不做拒付预警/RDR/Ethoca/反欺诈;小客户固定费不经济",
+    source: "Payinsider拜访纪要-2026-05-28"
   }
 ];
 
