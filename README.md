@@ -7,7 +7,7 @@
 当前恢复使用公开 GitHub Pages 承载业务看板：
 
 ```text
-https://ruihao-pay.github.io/tongdao-radar/
+https://ruihao-pay.github.io/channel-radar/
 ```
 
 `index.html` 和 `data.js` 为公开看板入口。`private-app/` 保留一份真实看板镜像，后续如果重新启用 Cloudflare Worker + 飞书 OAuth，可以继续作为 Worker assets 源。
