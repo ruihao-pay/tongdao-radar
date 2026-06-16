@@ -247,6 +247,17 @@ window.CONNECTED_CHANNELS = [
     source: "Waffo quotation sheet to Voice Friend-2026-4-28-V1.pdf / Waffo成本模型"
   },
   {
+    name: "AnstPay",
+    category: "美区 MoR / 高风险卡支付",
+    directStatus: "已接触暂停",
+    stage: "2026-05-06 原方案因 APP 尺度太大、美国 PP 跑不了被拒;替代方案经济性较好,但因强制代结算到锐浩账户,合规/税/外汇复杂度高,锐浩主动搁置",
+    fee: "替代方案口径:15% all-in;Setup $3,000;无保证金;拒付红线 2%",
+    settlement: "T+3;但要求代结算到锐浩账户,银行/退款场景可能要求通道方控制资金",
+    fit: "理论上适合美区 AI 陪聊/高风险卡支付兜底,尤其是需要低费率、短账期、无保证金的客户",
+    limit: "当前不建议对外承诺可落地;代结算会把客户资金、税务、外汇和退款责任压到我方账户;若重启必须先做实地尽调和资金责任边界确认",
+    source: "闲闲客户档案 / 闲闲通道横评 / 通道雷达 AnstPay 记录"
+  },
+  {
     name: "Appota",
     category: "越南本地支付聚合",
     directStatus: "暂停",
