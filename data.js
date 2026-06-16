@@ -119,7 +119,7 @@ window.CHANNELS_DATA = [
 
   // ========== 美区新增 - 中国系 ISO/MoR ==========
   {name:"美区高风险卡通道 A",region:"美区",role:"MoR",gate:"✅ PASS",hk:"✅",rec:"🏆 强推",driver:"L1 客户订单",hq:"中国",max_market:"美区高风险订阅",coverage:"US",sub:8,rate:7,market:5,cb:8,multi:5,settle:8,window:2,cost:"中 1.5",diff:"美区高风险订阅 MoR，已完成基础尽调；T+3 结算，拒付成本结构较友好，需持续监控主体稳定性",biz1:7.5,biz2:6.5,ai:"✅可接"},
-  {name:"Waffo",region:"全球",role:"MoR",gate:"⚠️ 条件PASS",hk:"✅",rec:"备选",driver:"L5 观察",hq:"欧洲",max_market:"美区+全球",coverage:"全球",sub:7,rate:4,market:7,cb:6,multi:5,settle:5,window:1,cost:"中 1.5",diff:"10%+€0.30 实际成本偏高，T+10，€10K最低提现，10-15% 保证金锁120天；当前暂停推进",biz1:5.5,biz2:5,ai:"✅可接"},
+  {name:"Waffo",region:"全球",role:"MoR",gate:"⚠️ 条件PASS",hk:"✅",rec:"备选",driver:"L3 战略窗口",hq:"欧洲",max_market:"亚太+全球卡",coverage:"印尼/菲律宾/越南/新马泰/港陆/台湾/日韩/全球卡",sub:7,rate:6,market:8,cb:7,multi:5,settle:5,window:1,cost:"中 1.5",diff:"2026-06-16 深圳泰济绿色业务报价:全球卡3.40%+$0.50,国际卡+1%;RDR$13/Ethoca$19;本地支付覆盖亚太多市场;T+10,提现1%最低$20。旧成人/高风险10%+€0.30报价已停用",biz1:6.65,biz2:6.25,ai:"✅可接"},
   {name:"AnstPay",region:"美区",role:"MoR",gate:"❌ FAIL",hk:"⚠️",rec:"❌ 不接入",driver:"Gate失败",hq:"中国",max_market:"美区",coverage:"US",sub:0,rate:0,market:0,cb:0,multi:0,settle:0,window:0,cost:"N/A",diff:"原方案类目适配度不足；替代方案涉及代结算，合规复杂，当前不接入",biz1:0,biz2:0,ai:"✅可接"},
   {name:"Asiabill",region:"美区",role:"MoR",gate:"❌ FAIL",hk:"❌",rec:"❌ 不接入",driver:"Gate失败",hq:"中国",max_market:"美区",coverage:"US",sub:0,rate:0,market:0,cb:0,multi:0,settle:0,window:0,cost:"N/A",diff:"特殊类目接受度不足，当前不接入",biz1:0,biz2:0,ai:"❌不接"},
   {name:"Pyvio",region:"美区",role:"MoR",gate:"⏳ 待评",hk:"⚠️",rec:"观察",driver:"L5 观察",hq:"未知",max_market:"美区",coverage:"US",sub:6,rate:6,market:5,cb:6,multi:5,settle:6,window:1,cost:"中 1.5",diff:"P3 等回复，可信度待验证",biz1:0,biz2:0,ai:"⏳待问"},
@@ -225,10 +225,10 @@ window.CONNECTED_CHANNELS = [
     source: "渠道BD跟进/领航"
   },
   {
-    name: "Antom",
+    name: "Antom 直连",
     category: "全球卡 + 钱包聚合",
-    directStatus: "审评中",
-    stage: "Arcane Brilliance 香港主体已对接;SparkLab/Lunote 等正规类目评估中",
+    directStatus: "已签约落地",
+    stage: "Arcane Brilliance 香港主体已签约落地;SparkLab/Lunote 等具体客户和类目仍需按 Antom 审核流程逐案评估",
     fee: "全球卡:本地 3.20% / 跨境 3.90% + USD 0.30;争议 USD 20;SEA 钱包约 1.0%-8.0% + USD 0.10",
     settlement: "统一 T+5",
     fit: "正规 AI 工具、SaaS、日韩港澳台/东南亚钱包、全球卡收单",
@@ -236,15 +236,26 @@ window.CONNECTED_CHANNELS = [
     source: "Antom费率基准 / Antom美区接入要求"
   },
   {
+    name: "Antom 内部合作",
+    category: "Antom 内部账户 / 阿里内部合作",
+    directStatus: "内部合作已开通",
+    stage: "通过阿里内部人员开通 Antom 内部账户;区别于 Arcane Brilliance 主体直连账户,适合作为内部资源协同和特殊客户推进通道",
+    fee: "费率按具体内部账户报价/客户方案确认;可参考 Antom 直连基准:全球卡本地 3.20% / 跨境 3.90% + USD 0.30,SEA 钱包约 1.0%-8.0% + USD 0.10",
+    settlement: "账期和结算主体按内部账户实际配置确认;不能默认等同 Arcane Brilliance 直连账户 T+5",
+    fit: "需要 Antom 资源协同、内部推动审核、正规 AI 工具/SaaS、日韩港澳台/东南亚钱包和全球卡收单的客户",
+    limit: "必须区分账户主体、结算归属、KYC 责任和客户类目审核;内部合作不等于所有高风险类目可过审",
+    source: "锐浩确认:通过阿里内部人员开通 Antom 内部账户"
+  },
+  {
     name: "Waffo",
-    category: "MoR / 欧洲收单 / 卡组 + APM",
-    directStatus: "暂停",
-    stage: "已拿刊例和 Voice Friend 报价;2026-04-29 因 €0.30 单笔费和阶梯费率谈不动,锐浩主动暂停;客户新场景可重启",
-    fee: "基础报价 10% + €0.30/笔;AI 类保证金 10-15%,锁 120 天;拒付未预警 €30/笔;按闲闲 $6 ARPU 测算,0.3% 拒付下实际成本约 23.17%",
-    settlement: "T+10;€10,000 最低提现;保证金锁 120 天",
-    fit: "欧洲/全球 MoR 备选、可接受高费率的 AI 陪聊/数字内容、需要卡组 + APM 且其他通道无法接的兜底场景",
-    limit: "小客单价业务被 €0.30/笔显著拉高成本;月流水 $500K-$1M+ 前议价空间弱;当前不能作为低成本主推通道",
-    source: "Waffo quotation sheet to Voice Friend-2026-4-28-V1.pdf / Waffo成本模型"
+    category: "绿色业务 MoR / 亚太本地支付 / 全球卡",
+    directStatus: "重新评估",
+    stage: "2026-06-16 收到深圳泰济绿色业务新版报价;旧成人/高风险报价已停用。当前可作为正规 SaaS / 亚太本地支付备选,用于宝龙 Lunote 并行评估",
+    fee: "全球卡/Apple Pay/Google Pay:3.40% + USD 0.50,国际卡 +1.00%;退款 USD 1;拒付 USD 25;RDR USD 13;Ethoca USD 19。本地支付:PayNow 1.9%,PromptPay 1.4% min THB15,港陆钱包2.2%,韩国钱包/本地卡3.3%,日本PayPay10.5%,台湾JKOPay7.5%,越南2.9%",
+    settlement: "USD 结算;提现 1% 最低 USD 20;提现门槛 USD 2,000;东南亚/港陆/台湾/韩国/全球卡 T+10;日本按方式分批或下下月结算;保证金按商户资质合同确认",
+    fit: "正规 AI 工具/SaaS 的全球卡备选;东南亚/日韩港澳台本地支付补位;Stripe/Antom 审核或覆盖不足时的 Plan B",
+    limit: "仅代表绿色业务报价,不能外推成人/高风险类目;全球卡固定费 $0.50 对低客单价订阅仍重;提现 1% 抬高总成本;T+10 慢于 Antom/部分 Stripe;订阅生态和品牌认知弱于 Stripe;越南游戏需 G1 License",
+    source: "Waffo quotation sheet to 深圳泰济-V1-2026-06-16.pdf / 渠道BD跟进/Waffo"
   },
   {
     name: "AnstPay",
