@@ -1,5 +1,5 @@
-// 通道雷达数据 - 最后更新 2026-06-16 v5
-// 共 136 条 (104 + Antom子方式32:东南亚11+东亚3+韩国3+欧洲7+拉美6+全球卡2，入库完成)
+// 通道雷达数据 - 最后更新 2026-06-19 v6
+// 共 137 条 (104 + Antom子方式32 + AI PowerPay 新线索1，入库完成)
 // schema: 新增 region(地区) + role(角色) 两个维度，替代原单一 type
 // role 新增"支付辅助服务"类目(跨拒通拒付管理 / 反欺诈 / 风控类)
 window.CHANNELS_DATA = [
@@ -24,6 +24,7 @@ window.CHANNELS_DATA = [
   {name:"Airwallex",region:"全球",role:"全球聚合商",gate:"⚠️ 部分FAIL",hk:"✅",rec:"备选",driver:"L4 业务补全",hq:"HK / 墨尔本",max_market:"中国出海+全球",coverage:"150+ 国",sub:8,rate:7,market:8,cb:7,multi:6,settle:8,window:1,cost:"中 1.5",diff:"HK 总部直签最顺路径+中国出海客户红利。云汇即此公司",biz1:7.55,biz2:7.35,ai:"未知"},
   {name:"VailPay",region:"全球",role:"全球聚合商",gate:"⚠️ 条件PASS",hk:"⚠️",rec:"备选",driver:"L5 观察",hq:"亚洲",max_market:"中国出海+东南亚",coverage:"40+ 国",sub:6,rate:6,market:7,cb:6,multi:6,settle:6,window:1,cost:"中 1.5",diff:"中国出海支付服务商,覆盖中港韩泰马印菲越新美英欧 40+ 国,100+ 支付方式。服务跨境电商/游戏/海外直播/数字商品/旅游,2024.12 刊例。HK 直签待验证",biz1:6,biz2:5.8,ai:"⏳待问"},
   {name:"PayerMax",region:"全球",role:"全球聚合商",gate:"⚠️ 条件PASS",hk:"⚠️",rec:"备选",driver:"L5 观察",hq:"新加坡",max_market:"东南亚+新兴市场",coverage:"150+ 国",sub:7,rate:6,market:8.5,cb:6.5,multi:8,settle:5.5,window:1,cost:"中 1.5",diff:"新加坡 MAS 全牌照(SHAREit/茄子科技旗下),收单+收款+正式 ISV 模式适合中间商。东南亚全钱包+巴西 PIX/Boleto+MENA,150 国 600+ 支付方式,覆盖最强项。订阅/社交直播打赏强。费率未公开需个案报价,T+2 周账期偏慢。特殊类目接受度待 BD 报备。Trustpilot 1.9 有兑现落差投诉。2026-05-20 调研",biz1:6.73,biz2:7.15,ai:"⏳待问"},
+  {name:"AI PowerPay",region:"美区",role:"全球聚合商",gate:"⏳ 待评",hk:"⚠️",rec:"备选",driver:"L1 客户订单",hq:"待确认",max_market:"AI陪聊/高风险订阅",coverage:"待确认",sub:6,rate:4,market:6,cb:5,multi:5,settle:5,window:1,cost:"重 2.5",diff:"Jerry 口头确认 AI 陪聊可接,cash 16 个点,无保证金,拒付率没要求。cash 非标准术语,大概率指信用卡/卡支付收单但待确认;16% 费率高,需核实是否全包、账期、拒付费/退款费、RDR/Ethoca、reserve、拒付率无要求的真实含义。2026-06-19 新线索",biz1:0,biz2:6.45,ai:"✅可接"},
   {name:"Oceanpayment",region:"全球",role:"全球聚合商",gate:"✅ PASS",hk:"✅",rec:"备选",driver:"L5 观察",hq:"中国香港",max_market:"跨境电商/游戏出海",coverage:"200+ 国",sub:7,rate:6,market:8,cb:6.5,multi:6,settle:5.5,window:1,cost:"中 1.5",diff:"老牌正规跨境收单 PSP(2014,香港总部,PCI DSS L1+新加坡 MPI 牌照,海闻教授顾问)。全卡组直连(Visa/MC/Amex/Discover/银联/JCB),500+支付产品,200+国家,140+货币。HK 直签顺路。风控严，特殊类目大概率拒签，更适合正规游戏/订阅/电商。费率约 3-3.8%+$0.30 跨境卡,账期/reserve 未公开需问商务。2026-05-20 调研",biz1:6.65,biz2:6.65,ai:"❌不接"},
 
   // ========== MoR ==========
@@ -412,7 +413,7 @@ window.BIZ_LABELS = {
 
 // 元数据
 window.META = {
-  lastUpdated: "2026-06-16",
-  totalCount: 136,
+  lastUpdated: "2026-06-19",
+  totalCount: 137,
   feishuUrl: "https://gcn9eq0plpq9.feishu.cn/base/QLySbEoyVae0pZsDjqucUGHKnGe?table=tblxC8TQmax7De1s&view=vewCBixMon"
 };
