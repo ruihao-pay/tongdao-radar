@@ -1,5 +1,5 @@
-// 通道雷达数据 - 最后更新 2026-06-30 v7
-// 共 138 条 (104 + Antom子方式32 + AI PowerPay + GlodraPay/Global Acquire 新线索，入库完成)
+// 通道雷达数据 - 最后更新 2026-07-01 v8
+// 共 143 条 (104 + Antom子方式32 + AI PowerPay + GlodraPay/Global Acquire + 国内支付编排/出海机构5条，入库完成)
 // schema: 新增 region(地区) + role(角色) 两个维度，替代原单一 type
 // role 新增"支付辅助服务"类目(跨拒通拒付管理 / 反欺诈 / 风控类)
 window.CHANNELS_DATA = [
@@ -150,6 +150,13 @@ window.CHANNELS_DATA = [
 
   // ========== 支付辅助服务 (拒付管理 / 反欺诈 / 风控) ==========
   {name:"拒付管理服务 A",region:"全球",role:"支付辅助服务",gate:"✅ PASS",hk:"✅",rec:"🟢 已锁接入",driver:"L1 客户订单",hq:"中国",max_market:"跨境拒付管理",coverage:"全球",sub:0,rate:0,market:0,cb:9.5,multi:0,settle:0,window:0,cost:"轻 1.0",diff:"信用卡拒付管理服务，覆盖反欺诈、预警、抗辩和包赔等模块；适合与高风险卡收单组合使用",biz1:0,biz2:0,ai:"✅可接"},
+
+  // ========== 国内支付编排 / 出海支付机构 (InsidePay/Payinsider 类调研 2026-07-01) ==========
+  {name:"Payinsider",region:"全球",role:"支付辅助服务",gate:"✅ PASS",hk:"✅",rec:"P1 合作观察",driver:"L3 战略窗口",hq:"香港 / 深圳",max_market:"正规 AI/SaaS 订阅",coverage:"200+ 国家连接能力",sub:9,rate:5.5,market:7.5,cb:6,multi:8.5,settle:6,window:2,cost:"重 2.5",diff:"国内最接近 InsidePay/支付编排的机构。官网定位为 subscription payment orchestration,提供 Connections、Hosted Checkout、Smart Transaction Routing、Smart Reconciliation、Subscription Management、Reporting 等;可连接 Stripe/Xendit/Adyen/PayPal/Checkout.com/Worldpay/dLocal/KCP 等。核心价值是智能路由、失败重试、订阅生命周期和对账;不承接资金,不解决高风险类目准入。已线下拜访,基础费约 $2,500/月,小客户不经济",biz1:7.2,biz2:7.1,ai:"❌不接"},
+  {name:"PhotonPay / 光子",region:"全球",role:"全球聚合商/支付编排",gate:"⚠️ 条件PASS",hk:"✅",rec:"P1 重点询价",driver:"L3 战略窗口",hq:"香港",max_market:"稳定币+全球订阅",coverage:"200+ 国家 / 100+ 支付方式",sub:8.5,rate:7,market:7.5,cb:7,multi:7.5,settle:8,window:2,cost:"中 1.5",diff:"光子/PhotonPay 官网已上 Billing、Checkout、Wallet、Movement、Cards 等产品;Billing 支持多币种订阅、固定/用量/阶梯计费、AI dunning、智能重试和 revenue recovery analytics;Checkout 支持 fiat+stablecoin、100+ 支付方式、API/Hosted Checkout/插件/Payment Link。更像稳定币原生支付操作系统+订阅计费,不是纯编排层;需确认卡收单/本地方式覆盖、AI/SaaS 与高风险边界、费率、RDR/Ethoca 和是否能做客户只接一次",biz1:7.25,biz2:7.05,ai:"⏳待问"},
+  {name:"SUNRATE",region:"全球",role:"全球聚合商",gate:"⚠️ 条件PASS",hk:"✅",rec:"P2 观察询价",driver:"L5 观察",hq:"新加坡",max_market:"B2B/平台/旅游/电商",coverage:"190+ 国家 / 130+ 付款币种",sub:5.5,rate:6.5,market:7.5,cb:6,multi:7,settle:7.5,window:1,cost:"中 1.5",diff:"Global payment & treasury management platform,覆盖 International Payments、Commercial Cards、Global Collection、Global Acquiring、TreasuryOS 等。Global Acquiring 覆盖 payment acceptance、reconciliation/settlement、cross-border fund management、localised payouts;案例提到 smart routing 降成本。更偏企业收付和资金管理,不是订阅编排专家;可作为正规 B2B/平台客户支付+财资候选",biz1:6.25,biz2:6.55,ai:"❌不接"},
+  {name:"LianLian Global / 连连国际",region:"全球",role:"全球聚合商",gate:"⚠️ 条件PASS",hk:"✅",rec:"P2 观察询价",driver:"L5 观察",hq:"杭州 / 香港",max_market:"跨境电商/数娱出海/平台",coverage:"100+ 国家",sub:5.5,rate:6.5,market:7.5,cb:6.5,multi:7.5,settle:7.5,window:1,cost:"中 1.5",diff:"连连全球提供全球收款账户、全球付款、全球收单、汇兑、连连卡及 API 文档;官网披露 68+ 支付牌照及资质、100+ 国家地区、1040万+客户、2025 TPV 4524亿元。数娱出海和 API/账户体系适合正规客户资金收付;但未看到订阅恢复/智能重试/vault 等 Payinsider 式能力,高风险/擦边边界需单独问",biz1:6.5,biz2:6.65,ai:"❌不接"},
+  {name:"iPayLinks / 艾贝盈",region:"全球",role:"全球聚合商",gate:"⚠️ 条件PASS",hk:"✅",rec:"P2 观察询价",driver:"L5 观察",hq:"上海 / 香港",max_market:"跨境电商/外贸/数字娱乐",coverage:"150+ 国家和地区",sub:5.5,rate:6.5,market:7,cb:6.5,multi:7,settle:7,window:1,cost:"中 1.5",diff:"一站式跨境支付平台,产品含外贸收款、平台收款、全球收单、全球付款、货币汇兑、资金对账、风险管理;官网称业务覆盖 150+ 国家地区、全球收单支持一站式接入全球支付方式,并披露新加坡 MPI、香港 MSO、英国 API、美国 MSB 等资质。更偏跨境收单/账户/结算,不是订阅编排;可用于正规数字娱乐/电商备选询价",biz1:6.35,biz2:6.45,ai:"❌不接"},
 
   // ========== Antom 子方式 (聚合旗下具体支付方式·判直连必要性) ==========
   // 东南亚(11)
@@ -436,7 +443,7 @@ window.BIZ_LABELS = {
 
 // 元数据
 window.META = {
-  lastUpdated: "2026-06-30",
-  totalCount: 138,
+  lastUpdated: "2026-07-01",
+  totalCount: 143,
   feishuUrl: "https://gcn9eq0plpq9.feishu.cn/base/QLySbEoyVae0pZsDjqucUGHKnGe?table=tblxC8TQmax7De1s&view=vewCBixMon"
 };
