@@ -120,7 +120,7 @@ window.CHANNELS_DATA = [
   {name:"Coinbase Commerce",region:"加密链",role:"加密 PSP",gate:"❌ FAIL",hk:"❌",rec:"❌ 不接入",driver:"Gate失败",hq:"旧金山",max_market:"美国",coverage:"US/SG",sub:3.5,rate:7.5,market:5,cb:9,multi:3.5,settle:7,window:0,cost:"重 2.5",diff:"2026-03-31 已关停非美/非新加坡商户，HK 不可签",biz1:6.18,biz2:5.3,ai:"❌不接"},
 
   // ========== 美区新增 - 中国系 ISO/MoR ==========
-  {name:"Kevin 美区高风险卡通道",region:"美区",role:"MoR/代理收单",gate:"⚠️ 条件PASS",hk:"✅",rec:"观察",driver:"L1 客户订单",hq:"中国/上游待确认",max_market:"美区 AI 视频/AI 陪聊/短剧订阅",coverage:"US Visa/Mastercard",sub:8,rate:5.5,market:6,cb:7,multi:5,settle:7,window:1,cost:"重 2.5",diff:"2026-06-23/30 Kevin 方案:基础 8.5%+$0.30,我方对客 10.5%+$0.30;拒付$25,退款$1,RDR$20,Ethoca$25,提现$30/笔,T+7日结;固保$50K+循保10%/180天，若连续6个月无问题且循保累计$300K可退固保。宝龙不接受前置固保，愿改 15% 循保，需继续谈释放、扣款触发和罚金责任边界",biz1:6.7,biz2:6.2,ai:"✅可接"},
+  {name:"Kevin / 四川国民美区高风险卡通道",region:"美区",role:"MoR/代理收单",gate:"⚠️ 条件PASS",hk:"✅",rec:"观察",driver:"L1 客户订单",hq:"四川国民",max_market:"美区 AI 视频/AI 陪聊/短剧订阅",coverage:"US Visa/Mastercard",sub:8,rate:5.5,market:6,cb:7,multi:5,settle:7,window:1,cost:"重 2.5",diff:"2026-06-23/30 Kevin(四川国民)方案:基础 8.5%+$0.30,我方对客 10.5%+$0.30;拒付$25,退款$1,RDR$20,Ethoca$25,提现$30/笔,T+7日结;原口径固保$50K+循保10%/180天。当前闲闲信用卡与 SparkLab AI 视频信用卡均等待 Kevin 答复是否可做 0 固保方案,需继续谈释放、扣款触发和罚金责任边界",biz1:6.7,biz2:6.2,ai:"✅可接"},
   {name:"Waffo",region:"全球",role:"MoR",gate:"⚠️ 条件PASS",hk:"✅",rec:"备选",driver:"L3 战略窗口",hq:"欧洲",max_market:"亚太+全球卡",coverage:"印尼/菲律宾/越南/新马泰/港陆/台湾/日韩/全球卡",sub:7,rate:6,market:8,cb:7,multi:5,settle:5,window:1,cost:"中 1.5",diff:"2026-06-16 深圳泰济绿色业务报价:全球卡3.40%+$0.50,国际卡+1%;RDR$13/Ethoca$19;本地支付覆盖亚太多市场;T+10,提现1%最低$20。旧成人/高风险10%+€0.30报价已停用",biz1:6.65,biz2:6.25,ai:"✅可接"},
   {name:"AnstPay",region:"美区",role:"MoR",gate:"❌ FAIL",hk:"⚠️",rec:"❌ 不接入",driver:"Gate失败",hq:"中国",max_market:"美区",coverage:"US",sub:0,rate:0,market:0,cb:0,multi:0,settle:0,window:0,cost:"N/A",diff:"原方案类目适配度不足；替代方案涉及代结算，合规复杂，当前不接入",biz1:0,biz2:0,ai:"✅可接"},
   {name:"Asiabill",region:"美区",role:"MoR",gate:"❌ FAIL",hk:"❌",rec:"❌ 不接入",driver:"Gate失败",hq:"中国",max_market:"美区",coverage:"US",sub:0,rate:0,market:0,cb:0,multi:0,settle:0,window:0,cost:"N/A",diff:"特殊类目接受度不足，当前不接入",biz1:0,biz2:0,ai:"❌不接"},
@@ -279,15 +279,15 @@ window.CONNECTED_CHANNELS = [
     source: "Jerry 微信口头报价 2026-06-19 / AIPowerPay：一站式跨境支付解决方案 (4).pdf"
   },
   {
-    name: "Kevin 美区高风险卡通道",
+    name: "Kevin / 四川国民美区高风险卡通道",
     category: "美区 Visa/Mastercard / AI 高风险订阅",
     directStatus: "保证金谈判中",
-    stage: "方案已发给 SparkLab/宝龙,暂未发闲闲。Kevin 解释固保主要覆盖 AI 视频版权/肖像侵权导致的卡组或通道罚金和商户逃单风险;宝龙不接受上线前 $50K 固保,愿把循保提高到 15%",
+    stage: "方案已发给 SparkLab/宝龙;闲闲信用卡和 SparkLab AI 视频信用卡同样等待 Kevin/四川国民确认是否可做 0 固保。Kevin 解释固保主要覆盖 AI 视频版权/肖像侵权导致的卡组或通道罚金和商户逃单风险;宝龙不接受上线前 $50K 固保,愿把循保提高到 15%",
     fee: "底层报价 8.5% + USD 0.30/笔;我方对客口径 10.5% + USD 0.30/笔;退款 USD 1;拒付 USD 25;RDR USD 20;Ethoca USD 25;提现 USD 30/笔",
     settlement: "T+7 日结;固保 USD 50,000 + 循保 10% 锁 180 天。当前上游口径:连续 6 个月无问题且循保累计 USD 300,000 后可退固保;宝龙提出 0 固保 + 15% 循保替代结构",
     fit: "AI 视频、AI 陪聊、短剧等美区高风险 H5 订阅卡收单,尤其是 Stripe/Antom 直连难过审的场景",
     limit: "现金占用重,拒付红线和内容违规罚金责任必须合同化;固保释放、扣款触发、商户补款顺序和主体/资金路径未确认前不能当成已成交方案",
-    source: "2026-06-23/24 Kevin 报价 + 2026-06-30 Kevin/宝龙沟通"
+    source: "2026-06-23/24 Kevin 报价 + 2026-06-30 Kevin/宝龙沟通 + 2026-07-02 锐浩补充"
   },
   {
     name: "Segpay / Epoch",
@@ -476,19 +476,19 @@ window.CUSTOMERS = [
   {
     id: "cust_xianxian",
     name: "闲闲 / Voice Friend",
-    status: "已合作",
-    stage: "已合作",
+    status: "对接中",
+    stage: "对接中",
     priority: "P1",
     categories: ["ai_high_risk_subscription"],
     markets: ["美国", "泰国", "越南"],
     risk_tags: ["AI 陪聊", "成人/擦边", "高拒付"],
-    payment_needs: ["美区卡收单", "拒付预警", "备用通道"],
-    current_path: "AI 陪聊支付合作已签;信用卡新方案另列搁置项",
-    current_solution: "",
-    blockers: ["信用卡新通道保证金重", "客户侧接受度待确认"],
-    next_step: "维持合作关系,等高风险美区卡条件改善后重启信用卡方案",
+    payment_needs: ["StablePay 稳定币支付", "技术对接", "信用卡备用通道"],
+    current_path: "已先接 StablePay 稳定币支付,正在技术对接;信用卡方案另列搁置项",
+    current_solution: "case_xianxian_stablepay",
+    blockers: ["StablePay 技术对接中", "信用卡需等 Kevin/四川国民 0 固保答复"],
+    next_step: "跟进 StablePay 技术对接;同步等待 Kevin/四川国民确认信用卡 0 固保方案",
     value_band: "高",
-    updated_at: "2026-06-24"
+    updated_at: "2026-07-02"
   },
   {
     id: "cust_lizong_vietnam",
@@ -508,8 +508,8 @@ window.CUSTOMERS = [
     updated_at: "2026-06-26"
   },
   {
-    id: "cust_hk_baojin",
-    name: "香港爆金 / AI 短剧",
+    id: "cust_sparklab_ai_video",
+    name: "SparkLab / AI 视频",
     status: "对接中",
     stage: "对接中",
     priority: "P0",
@@ -517,12 +517,12 @@ window.CUSTOMERS = [
     markets: ["美国"],
     risk_tags: ["AI 视频", "版权/肖像风险", "保证金敏感"],
     payment_needs: ["美区卡收单", "拒付预警"],
-    current_path: "Wintopay / Kevin 美区高风险卡",
-    current_solution: "case_hk_baojin_wintopay",
-    blockers: ["客户不接受 $50K 固保", "只接受更高循保"],
-    next_step: "与 Kevin 确认 0 固保 + 15% 循保是否可行",
+    current_path: "Kevin / 四川国民美区高风险卡",
+    current_solution: "case_sparklab_ai_video_kevin",
+    blockers: ["等待 Kevin/四川国民确认 0 固保方案", "版权/肖像风险罚金责任需明确"],
+    next_step: "与 Kevin/四川国民确认 0 固保 + 高循保是否可行",
     value_band: "高",
-    updated_at: "2026-06-30"
+    updated_at: "2026-07-02"
   },
   {
     id: "cust_payinsider",
@@ -551,12 +551,12 @@ window.CUSTOMERS = [
     markets: ["美国"],
     risk_tags: ["AI 陪聊", "高风险卡", "保证金重"],
     payment_needs: ["美区卡收单", "拒付预警", "备用主体"],
-    current_path: "高风险美区卡方案待重启",
+    current_path: "Kevin / 四川国民信用卡方案待重启",
     current_solution: "",
-    blockers: ["领航停止合作", "新美区通道保证金重", "客户侧接受度待确认"],
-    next_step: "等 0 固保或低固保方案出现后再重启",
+    blockers: ["领航停止合作", "等待 Kevin/四川国民 0 固保答复", "客户侧接受度待确认"],
+    next_step: "等 Kevin/四川国民确认 0 固保方案后再重启",
     value_band: "高",
-    updated_at: "2026-06-24"
+    updated_at: "2026-07-02"
   }
 ];
 
@@ -579,20 +579,37 @@ window.SOLUTION_CASES = [
     visibility: "internal"
   },
   {
-    id: "case_hk_baojin_wintopay",
-    name: "香港爆金 / AI 短剧 Wintopay 美区卡方案",
-    customer_id: "cust_hk_baojin",
+    id: "case_sparklab_ai_video_kevin",
+    name: "SparkLab / AI 视频 Kevin 美区卡方案",
+    customer_id: "cust_sparklab_ai_video",
     category_id: "ai_high_risk_subscription",
-    status: "已输出 / 保证金谈判中",
+    status: "等待 0 固保答复",
     market: "美国",
-    roles: {main_acquirer:"Wintopay / Kevin 美区卡", backup_acquirer:"Waffo 待类目确认", risk_control:"RDR/Ethoca", fund_flow:"客户主体资料 + 通道结算路径待确认"},
-    upstream_cost_internal: "底层报价 8.5% + USD 0.30/笔;退款 USD 1;拒付 USD 25;RDR USD 20;Ethoca USD 25;提现 USD 30/笔;固保 USD 50,000 + 循保 10%。",
+    roles: {main_acquirer:"Kevin / 四川国民美区卡", backup_acquirer:"Waffo 待类目确认", risk_control:"RDR/Ethoca", fund_flow:"客户主体资料 + 通道结算路径待确认"},
+    upstream_cost_internal: "底层报价 8.5% + USD 0.30/笔;退款 USD 1;拒付 USD 25;RDR USD 20;Ethoca USD 25;提现 USD 30/笔;原口径固保 USD 50,000 + 循保 10%;当前等待 0 固保答复。",
     our_fee_internal: "对客口径 10.5% + USD 0.30/笔,退款/拒付/预警/提现/保证金实报实销。",
-    client_pricing_public: "10.5% + USD 0.30/笔,退款/拒付/预警/提现/保证金按客户侧规则承担。",
-    settlement_terms_public: "T+7 日结;固保和循保释放条件待合同确认。",
-    reuse_conditions: ["AI 视频/短剧", "客户可接受固保或高循保", "内容版权风险可解释"],
-    unfit_conditions: ["客户完全不接受保证金", "明显侵权内容", "拒付率不可控"],
+    client_pricing_public: "待 Kevin/四川国民确认 0 固保后再定稿;现有报价不能直接承诺。",
+    settlement_terms_public: "T+7 日结;固保/循保/罚金扣款触发待合同确认。",
+    reuse_conditions: ["AI 视频/短剧", "0 固保或低固保可落地", "内容版权风险可解释"],
+    unfit_conditions: ["Kevin/四川国民不接受 0 固保", "明显侵权内容", "拒付率不可控"],
     files: ["深圳泰济科技有限公司-集团AI产品美区卡支付报价图-v2-2026-06-25.png"],
+    visibility: "internal"
+  },
+  {
+    id: "case_xianxian_stablepay",
+    name: "闲闲 / Voice Friend StablePay 稳定币方案",
+    customer_id: "cust_xianxian",
+    category_id: "ai_high_risk_subscription",
+    status: "技术对接中",
+    market: "全球 / 稳定币",
+    roles: {main_acquirer:"StablePay", backup_acquirer:"待补", risk_control:"KYT/AML + 客户侧风控", fund_flow:"USDT/USDC 收款路径"},
+    upstream_cost_internal: "StablePay 费率按代理协议和实际产品确认;当前重点不是报价,而是技术接入落地。",
+    our_fee_internal: "待技术接入和交易路径确认后测算。",
+    client_pricing_public: "已先推进 StablePay 稳定币支付,当前处于技术对接中。",
+    settlement_terms_public: "链上到账/出入金/结算规则按 StablePay 接入确认。",
+    reuse_conditions: ["AI 陪聊/高风险业务可接受稳定币", "客户能接受链上收款", "资金用途和出入金路径清楚"],
+    unfit_conditions: ["必须信用卡 token 续费", "客户不能接受链上/KYT 风险"],
+    files: ["StablePay费率详情", "闲闲客户档案"],
     visibility: "internal"
   },
   {
