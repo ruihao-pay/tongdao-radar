@@ -525,23 +525,6 @@ window.CUSTOMERS = [
     updated_at: "2026-07-02"
   },
   {
-    id: "cust_payinsider",
-    name: "Payinsider",
-    status: "暂时搁置",
-    stage: "暂时搁置",
-    priority: "P2",
-    categories: ["ai_tool_subscription"],
-    markets: ["全球"],
-    risk_tags: ["同行学习", "编排层", "正规 SaaS"],
-    payment_needs: ["支付编排", "订阅恢复", "智能路由"],
-    current_path: "支付编排合作观察",
-    current_solution: "",
-    blockers: ["固定费对小客户不经济", "不解决高风险准入"],
-    next_step: "作为编排层对照样本和潜在合作方保留",
-    value_band: "低",
-    updated_at: "2026-05-28"
-  },
-  {
     id: "cust_ai_chat_card_paused",
     name: "AI 陪聊信用卡支付",
     status: "暂时搁置",
