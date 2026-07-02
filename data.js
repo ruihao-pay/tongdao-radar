@@ -416,7 +416,7 @@ window.BUSINESS_CATEGORIES = [
     main_path: "Antom / GlodraPay / 本地 PSP",
     backup_path: "Appota 成本基准 / MoR 路径",
     auxiliary: ["本地主体/MoR 评估", "本地钱包覆盖", "结算币种核验"],
-    related_cases: ["case_lizong_vietnam", "case_hk_baojin_glodrapay"],
+    related_cases: ["case_lizong_vietnam", "case_hk_baojin_glodrapay", "case_zhengwei_ios_us_card", "case_zhengwei_stablecoin_backup"],
     risks: ["本地主体资质", "recurring 能力", "结算币种", "申请门槛"],
     reuse_conditions: ["目标市场明确", "类目正规", "可补本地主体或接受 MoR 路径"],
     required_gates: ["覆盖目标市场", "支持订阅/代扣", "主体路径明确", "费率账期可算"]
@@ -531,7 +531,7 @@ window.CUSTOMERS = [
     status: "对接中",
     stage: "对接中",
     priority: "P0",
-    categories: ["ai_high_risk_subscription"],
+    categories: ["ai_high_risk_subscription", "overseas_normal_subscription"],
     markets: ["美国", "全球卡"],
     risk_tags: ["AI 短剧", "版权分流", "低客单价订阅", "高风险卡"],
     payment_needs: ["美区/全球卡收单", "订阅扣款", "拒付预警"],
@@ -545,6 +545,28 @@ window.CUSTOMERS = [
     blockers: ["Wintopay 合同责任边界待确认", "GlodraPay 订阅/RDR/Ethoca 待确认", "无版权短剧需单独高风险评估"],
     next_step: "首批按有版权授权的 playlet 进件;继续追 Wintopay 合同确认和 GlodraPay 订阅/预警费回复",
     value_band: "高",
+    updated_at: "2026-07-02"
+  },
+  {
+    id: "cust_zhengwei_ios",
+    name: "蒸味作坊 / iOS 订阅工具（待核实）",
+    status: "对接中",
+    stage: "对接中",
+    priority: "P1",
+    categories: ["overseas_normal_subscription"],
+    markets: ["美国", "全球卡", "中国"],
+    risk_tags: ["iOS 订阅工具", "美区卡", "RDR/拒付管理", "退款率管理", "补单需求", "美区主体"],
+    payment_needs: ["美区信用卡收单", "RDR/拒付预警", "退款率/拒付率管理", "稳定币订阅兜底", "国内微信订阅观察"],
+    products: [
+      {name:"海外 iOS 订阅工具", url:"待补", note:"美区为主,其他市场也有;客户关注 Apple Pay/卡支付转化、RDR、退款率和账期"},
+      {name:"国内 AI 键盘", url:"待补", note:"客户投资团队产品,每月订阅;后续可能看微信订阅,支付宝风控较严"}
+    ],
+    current_path: "美区卡收单/RDR/拒付管理为主;客户称有美区主体和虚拟银行账户;可并行评估 USDT/USDC 稳定币订阅作为法币通道兜底",
+    current_solution: "case_zhengwei_ios_us_card",
+    current_solutions: ["case_zhengwei_ios_us_card", "case_zhengwei_stablecoin_backup"],
+    blockers: ["需看具体产品和现有支付链路", "需确认月流水/退款率/拒付率", "Apple Pay 拉起诉求需区分 App Store IAP 与三方 H5/卡支付", "补单/白量需求需明确合规和成本边界"],
+    next_step: "2026-07-03 14:30 线上会:拉海外支付负责人,让客户展示产品、现有通道、量级、退款/拒付数据和主体材料",
+    value_band: "中",
     updated_at: "2026-07-02"
   }
 ];
@@ -571,7 +593,7 @@ window.SOLUTION_CASES = [
     id: "case_sparklab_ai_video_kevin",
     name: "SparkLab / AI 视频 Kevin 美区卡方案",
     customer_id: "cust_sparklab_ai_video",
-    category_id: "overseas_normal_subscription",
+    category_id: "ai_high_risk_subscription",
     status: "等待 0 固保答复",
     market: "美国",
     roles: {main_acquirer:"Kevin / 四川国民美区卡", backup_acquirer:"Waffo 待类目确认", risk_control:"RDR/Ethoca", fund_flow:"客户主体资料 + 通道结算路径待确认"},
@@ -667,6 +689,40 @@ window.SOLUTION_CASES = [
     reuse_conditions: ["越南本地订阅支付", "客户可提供或接受本地主体/MoR 路径"],
     unfit_conditions: ["只做美区卡", "不能满足越南资质要求"],
     files: ["待补"],
+    visibility: "internal"
+  },
+  {
+    id: "case_zhengwei_ios_us_card",
+    name: "蒸味作坊 / iOS 订阅工具美区卡方案",
+    customer_id: "cust_zhengwei_ios",
+    category_id: "overseas_normal_subscription",
+    status: "新线索 / 待产品和数据",
+    market: "美国 / 全球卡",
+    roles: {main_acquirer:"待选美区卡通道", backup_acquirer:"StablePay 稳定币订阅", risk_control:"RDR/拒付预警 + 退款率管理", fund_flow:"客户美区主体/虚拟银行或外部主体待定"},
+    upstream_cost_internal: "客户称有美区主体和虚拟银行账户;具体卡通道、账期、费率、RDR/Ethoca、退款/拒付成本待看产品和量级后报价。",
+    our_fee_internal: "待确认月流水、客单价、退款率、拒付率、补单需求和是否使用客户主体后测算。",
+    client_pricing_public: "先评估美区卡收单 + RDR/拒付管理;Apple Pay 诉求需区分 App Store IAP、Apple Pay on web 与三方卡支付。",
+    settlement_terms_public: "若用客户自有美区主体,账期和资金路径更直接;若用外部主体,会有账期和转账成本。",
+    reuse_conditions: ["iOS/工具类订阅", "有美区主体", "可提供真实退款/拒付数据", "需要 RDR/拒付管理"],
+    unfit_conditions: ["必须三方直接拉起 App Store IAP", "不提供产品和数据", "补单需求不可合规解释"],
+    files: ["蒸味作坊 2.m4a", "zhengweizuofang_2_transcript.txt"],
+    visibility: "internal"
+  },
+  {
+    id: "case_zhengwei_stablecoin_backup",
+    name: "蒸味作坊 / 稳定币订阅兜底方案",
+    customer_id: "cust_zhengwei_ios",
+    category_id: "overseas_normal_subscription",
+    status: "建议评估 / 待客户确认",
+    market: "美国 / 全球",
+    roles: {main_acquirer:"StablePay 或同类稳定币通道", backup_acquirer:"美区卡通道", risk_control:"KYT/AML", fund_flow:"USDT/USDC 订阅收款"},
+    upstream_cost_internal: "语音沟通中已说明 U 可做支付和订阅,费率通常低于法币,适合作为法币通道被限制时的兜底。",
+    our_fee_internal: "待客户确认是否愿意接 U、目标币种、链、出入金路径后测算。",
+    client_pricing_public: "不是替代信用卡,而是与法币卡支付并行的兜底支付方式。",
+    settlement_terms_public: "链上到账、订阅授权、出入金和结算规则按通道接入确认。",
+    reuse_conditions: ["客户接受 USDT/USDC", "需要法币通道外的兜底", "能承接链上/KYT 流程"],
+    unfit_conditions: ["用户完全不接受稳定币", "必须 Apple Pay/IAP", "资金用途或出入金路径不清楚"],
+    files: ["蒸味作坊 2.m4a", "zhengweizuofang_2_transcript.txt"],
     visibility: "internal"
   },
   {
