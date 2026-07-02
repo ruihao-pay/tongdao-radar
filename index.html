@@ -1160,6 +1160,20 @@ function renderCustomers(root) {
             ${tagList(customer.risk_tags, 'amber')}
           </div>
         </div>
+        ${(customer.products || []).length ? `
+          <div class="mt-4 rounded border bg-slate-50 p-3">
+            <div class="text-xs font-semibold text-gray-500 mb-2">产品</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              ${customer.products.map(product => `
+                <div class="rounded border bg-white px-3 py-2">
+                  <div class="text-sm font-semibold text-gray-900">${product.name || '未命名产品'}</div>
+                  <div class="text-xs text-blue-700 mt-1">${product.url || ''}</div>
+                  <div class="text-xs text-gray-600 mt-1">${product.note || ''}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
         <div class="mt-4 rounded border bg-gray-50 p-3">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>

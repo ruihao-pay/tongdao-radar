@@ -400,7 +400,7 @@ window.BUSINESS_CATEGORIES = [
     main_path: "Kevin / Wintopay 美区卡",
     backup_path: "Segpay / Epoch / AnstPay 兜底询价",
     auxiliary: ["跨拒通 RDR/Ethoca", "内容风控审核", "备用结算路径"],
-    related_cases: ["case_hk_baojin_wintopay"],
+    related_cases: ["case_sparklab_ai_video_kevin", "case_hk_baojin_wintopay", "case_hk_baojin_glodrapay"],
     risks: ["版权/肖像侵权", "卡组罚金", "固保现金占用", "拒付红线", "主体寿命"],
     reuse_conditions: ["客户接受保证金或高循保", "内容边界可解释", "拒付率可控"],
     required_gates: ["类目可接", "保证金可接受", "拒付红线明确", "罚金责任明确"]
@@ -524,6 +524,28 @@ window.CUSTOMERS = [
     next_step: "与 Kevin/四川国民确认 0 固保 + 高循保是否可行",
     value_band: "高",
     updated_at: "2026-07-02"
+  },
+  {
+    id: "cust_hk_baojin",
+    name: "香港爆金 / AI 短剧",
+    status: "对接中",
+    stage: "对接中",
+    priority: "P0",
+    categories: ["ai_high_risk_subscription"],
+    markets: ["美国", "全球卡"],
+    risk_tags: ["AI 短剧", "版权分流", "低客单价订阅", "高风险卡"],
+    payment_needs: ["美区/全球卡收单", "订阅扣款", "拒付预警"],
+    products: [
+      {name:"授权短剧", url:"https://playlet.cdch666.com", note:"有版权授权,优先作为首批进件产品"},
+      {name:"非授权短剧", url:"https://short.bingoshort.com", note:"无版权授权,不建议与授权产品混同进件/同 MID"}
+    ],
+    current_path: "两个 AI 短剧产品需分流:playlet.cdch666.com 有版权授权,可优先走 Wintopay/GlodraPay;short.bingoshort.com 无版权授权,暂不建议同进件包/同 MID/同结算主体",
+    current_solution: "case_hk_baojin_wintopay",
+    current_solutions: ["case_hk_baojin_wintopay", "case_hk_baojin_glodrapay"],
+    blockers: ["Wintopay 合同责任边界待确认", "GlodraPay 订阅/RDR/Ethoca 待确认", "无版权短剧需单独高风险评估"],
+    next_step: "首批按有版权授权的 playlet 进件;继续追 Wintopay 合同确认和 GlodraPay 订阅/预警费回复",
+    value_band: "高",
+    updated_at: "2026-07-02"
   }
 ];
 
@@ -594,6 +616,40 @@ window.SOLUTION_CASES = [
     reuse_conditions: ["AI 陪聊/成人擦边", "0 固保或低固保可落地", "客户需要信用卡作为稳定币之外的补充支付"],
     unfit_conditions: ["必须立即上线信用卡", "客户完全不接受保证金", "拒付/内容风险不可控"],
     files: ["闲闲客户档案", "四川国民支付方案待办"],
+    visibility: "internal"
+  },
+  {
+    id: "case_hk_baojin_wintopay",
+    name: "香港爆金 / AI 短剧 Wintopay 美区卡方案",
+    customer_id: "cust_hk_baojin",
+    category_id: "ai_high_risk_subscription",
+    status: "待通道合同确认 / 产品分流",
+    market: "美国 / 全球卡",
+    roles: {main_acquirer:"Wintopay", backup_acquirer:"GlodraPay 授权短剧备选", risk_control:"跨拒通 RDR/Ethoca", fund_flow:"香港爆金主体 + 通道结算路径待确认"},
+    upstream_cost_internal: "Wintopay 当前作为 AI 短剧主推路径;低客单价订阅下 USD 0.30/笔和 10% 循保优于 Waffo 旧口径。需合同确认 AI短剧/UGC 内容、下挂罚款、保证金释放和拒付预警外接。",
+    our_fee_internal: "泰济服务费口径:月流水 USD 1,000,000 以内 3.0% on GMV;超过部分 2.0% on GMV。",
+    client_pricing_public: "首批建议只用有版权授权的 playlet.cdch666.com 进件;无版权 short.bingoshort.com 不与授权产品混同进件。",
+    settlement_terms_public: "账期、循保释放、下挂/罚款责任待 Wintopay 合同确认。",
+    reuse_conditions: ["AI 短剧", "低客单价订阅", "有版权授权产品", "客户可接受产品分流"],
+    unfit_conditions: ["无版权产品混同进件", "客户要求同 MID 承接所有短剧", "拒付率不可控"],
+    files: ["香港爆金_AI短剧_Wintopay美区信用卡支付方案_2026-07-01.docx", "香港爆金有限公司客户档案"],
+    visibility: "internal"
+  },
+  {
+    id: "case_hk_baojin_glodrapay",
+    name: "香港爆金 / 授权短剧 GlodraPay 备选方案",
+    customer_id: "cust_hk_baojin",
+    category_id: "ai_high_risk_subscription",
+    status: "授权短剧备选 / 待补订阅与预警费",
+    market: "美国 / 全球卡",
+    roles: {main_acquirer:"GlodraPay / Global Acquire", backup_acquirer:"Wintopay", risk_control:"RDR/Ethoca 待确认", fund_flow:"待确认"},
+    upstream_cost_internal: "GlodraPay 口径:授权短剧可评估,非授权短剧不接;收单 3.9%,拒付 USD 20/笔,退款 USD 0.25-0.30/笔,结汇归国 0.3%,开户费单产品 USD 5,000-10,000,循保约 10%-15%,T+7 到 T+3。",
+    our_fee_internal: "待确认订阅扣款、RDR/Ethoca、Visa/Mastercard 覆盖和版权材料后再测算。",
+    client_pricing_public: "仅作为有版权授权短剧备选;不用于无版权短剧。",
+    settlement_terms_public: "T+7 到 T+3;保证金 180 天循环释放;具体以 GlodraPay 终审为准。",
+    reuse_conditions: ["授权短剧", "可提供版权材料", "接受单产品开户费"],
+    unfit_conditions: ["无版权短剧", "不能提供授权证明", "需要立刻确认订阅/RDR/Ethoca"],
+    files: ["香港爆金有限公司客户档案"],
     visibility: "internal"
   },
   {
