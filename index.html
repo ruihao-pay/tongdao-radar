@@ -1134,7 +1134,8 @@ function renderCategories(root) {
 
 function renderCustomers(root) {
   const rows = CUSTOMERS.map(customer => {
-    const currentCase = findCase(customer.current_solution);
+    const solutionIds = customer.current_solutions || (customer.current_solution ? [customer.current_solution] : []);
+    const currentCases = solutionIds.map(findCase).filter(Boolean);
     const categories = (customer.categories || []).map(id => BUSINESS_CATEGORIES.find(c => c.id === id)).filter(Boolean);
     return `
       <div class="bg-white border rounded-lg p-4 shadow-sm">
@@ -1163,8 +1164,15 @@ function renderCustomers(root) {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <div class="text-xs font-semibold text-gray-500 mb-1">当前方案</div>
-              <div class="text-sm font-semibold text-gray-900">${currentCase ? currentCase.name : '暂无绑定方案'}</div>
-              <div class="text-xs text-gray-500 mt-1">${currentCase ? currentCase.status : '需要先补方案或标记为观察'}</div>
+              ${currentCases.length ? currentCases.map(item => `
+                <div class="mb-2 last:mb-0">
+                  <div class="text-sm font-semibold text-gray-900">${item.name}</div>
+                  <div class="text-xs text-gray-500 mt-1">${item.status}</div>
+                </div>
+              `).join('') : `
+                <div class="text-sm font-semibold text-gray-900">暂无绑定方案</div>
+                <div class="text-xs text-gray-500 mt-1">需要先补方案或标记为观察</div>
+              `}
             </div>
             <div>
               <div class="text-xs font-semibold text-gray-500 mb-1">下一步</div>

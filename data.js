@@ -482,10 +482,11 @@ window.CUSTOMERS = [
     categories: ["ai_high_risk_subscription"],
     markets: ["美国", "泰国", "越南"],
     risk_tags: ["AI 陪聊", "成人/擦边", "高拒付"],
-    payment_needs: ["StablePay 稳定币支付", "技术对接", "信用卡备用通道"],
-    current_path: "已先接 StablePay 稳定币支付,正在技术对接;信用卡方案另列搁置项",
+    payment_needs: ["StablePay 稳定币支付", "技术对接", "美区成人/高风险信用卡备用通道"],
+    current_path: "同一应用可接多种支付:StablePay 稳定币支付正在技术对接;美区成人/高风险信用卡由 Kevin/四川国民争取 0 固保,暂时搁置",
     current_solution: "case_xianxian_stablepay",
-    blockers: ["StablePay 技术对接中", "信用卡需等 Kevin/四川国民 0 固保答复"],
+    current_solutions: ["case_xianxian_stablepay", "case_xianxian_credit_card_kevin"],
+    blockers: ["StablePay 技术对接中", "美区成人/高风险信用卡拿不到合适通道", "Kevin/四川国民正在争取 0 固保"],
     next_step: "跟进 StablePay 技术对接;同步等待 Kevin/四川国民确认信用卡 0 固保方案",
     value_band: "高",
     updated_at: "2026-07-02"
@@ -521,23 +522,6 @@ window.CUSTOMERS = [
     current_solution: "case_sparklab_ai_video_kevin",
     blockers: ["等待 Kevin/四川国民确认 0 固保方案", "版权/肖像风险罚金责任需明确"],
     next_step: "与 Kevin/四川国民确认 0 固保 + 高循保是否可行",
-    value_band: "高",
-    updated_at: "2026-07-02"
-  },
-  {
-    id: "cust_ai_chat_card_paused",
-    name: "AI 陪聊信用卡支付",
-    status: "暂时搁置",
-    stage: "暂时搁置",
-    priority: "P2",
-    categories: ["ai_high_risk_subscription"],
-    markets: ["美国"],
-    risk_tags: ["AI 陪聊", "高风险卡", "保证金重"],
-    payment_needs: ["美区卡收单", "拒付预警", "备用主体"],
-    current_path: "Kevin / 四川国民信用卡方案待重启",
-    current_solution: "",
-    blockers: ["领航停止合作", "等待 Kevin/四川国民 0 固保答复", "客户侧接受度待确认"],
-    next_step: "等 Kevin/四川国民确认 0 固保方案后再重启",
     value_band: "高",
     updated_at: "2026-07-02"
   }
@@ -593,6 +577,23 @@ window.SOLUTION_CASES = [
     reuse_conditions: ["AI 陪聊/高风险业务可接受稳定币", "客户能接受链上收款", "资金用途和出入金路径清楚"],
     unfit_conditions: ["必须信用卡 token 续费", "客户不能接受链上/KYT 风险"],
     files: ["StablePay费率详情", "闲闲客户档案"],
+    visibility: "internal"
+  },
+  {
+    id: "case_xianxian_credit_card_kevin",
+    name: "闲闲 / Voice Friend 美区成人信用卡备用方案",
+    customer_id: "cust_xianxian",
+    category_id: "ai_high_risk_subscription",
+    status: "暂时搁置 / 等 0 固保答复",
+    market: "美国",
+    roles: {main_acquirer:"Kevin / 四川国民美区卡", backup_acquirer:"待补", risk_control:"RDR/Ethoca", fund_flow:"四川国民/上游主体路径待确认"},
+    upstream_cost_internal: "底层原口径 8.5% + USD 0.30/笔;退款 USD 1;拒付 USD 25;RDR USD 20;Ethoca USD 25;提现 USD 30/笔;原口径固保 USD 50,000 + 循保 10%。",
+    our_fee_internal: "待 Kevin/四川国民争取 0 固保后再定;当前不能按已落地通道报价。",
+    client_pricing_public: "同一应用可同时接稳定币和信用卡;当前先用 StablePay 稳定币兜底,信用卡等 Kevin/四川国民 0 固保答复后再重启。",
+    settlement_terms_public: "T+7/固保/循保/罚金扣款触发均待 Kevin/四川国民确认。",
+    reuse_conditions: ["AI 陪聊/成人擦边", "0 固保或低固保可落地", "客户需要信用卡作为稳定币之外的补充支付"],
+    unfit_conditions: ["必须立即上线信用卡", "客户完全不接受保证金", "拒付/内容风险不可控"],
+    files: ["闲闲客户档案", "四川国民支付方案待办"],
     visibility: "internal"
   },
   {
